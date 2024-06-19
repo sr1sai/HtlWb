@@ -30,7 +30,7 @@ body {
 }
 .header_nav_bar_item_text{
   color:rgb(238, 238, 238);
-  border-radius:25px ;
+  border-radius: 25px 25px 0px 0px;
   padding: 10px 15px;
   margin-left: 2px;
   margin-right: 2px;
@@ -113,6 +113,7 @@ a{
   border-radius: 80px;
   background-color: transparent;
   overflow-y: auto;
+  box-shadow: 5px 5px 15px black ;
 }
 .slides::-webkit-scrollbar {
   display: none;

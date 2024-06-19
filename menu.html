@@ -17,6 +17,101 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM Sans:wght@700&display=swap"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      .active{
+        color: rgb(34, 40, 49);
+        background-color: rgb(238, 238, 238);
+      }
+      .active_tab{
+        .tab_header_item{
+          color: white;
+          background-color: rgb(0, 173, 181);
+          transition: ease background-color 0.3s, ease color 0.3s;
+        }
+      }
+      .active_grp{
+        display: block;
+      }
+      .tabbed_pane{
+        height: 90%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        border-radius: 80px;
+        background-color: white;
+        overflow-y: auto;
+      }
+      .tab_head{
+        width: 100%;
+        height: 15%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(57, 62, 70);
+      }
+      .tab_header{
+        padding:0px 5%;
+        border-left: 1px solid rgb(34, 40, 49);
+        border-right: 1px solid rgb(34, 40, 49);
+        cursor: pointer;
+      }
+      .tab_header:hover{
+        .tab_header_item{
+          color: white;
+          background-color: rgb(0, 173, 181);
+          transition: ease background-color 0.3s, ease color 0.3s;
+        }
+      }
+      .tab_header_item{
+        font-weight: bold;
+        font-size: 150%;
+        font-family: 'Josefin Sans';
+        color: rgb(34, 40, 49);
+        padding: 10px 30px;
+        border-radius: 22px;
+        background-color:rgb(238, 238, 238);
+      }
+      .tab_body{
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+      }
+      .tab_body::-webkit-scrollbar {
+        display: none;
+      }
+      .tab_body_grp{
+        height: 100%;
+        width: 100%;
+      }
+      .tab_body_grp_item{
+        width: 100%;
+        height: 35%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgb(34, 40, 49);
+      }
+      .tab_body_grp_item_text{
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+      }
+      .tab_body_grp_item_text_name{
+        font-family: 'DM Sans';
+        font-size: 150%;
+        text-decoration: underline;
+
+      }
+      .tab_body_grp_item_img{
+        height: 150px;
+        width: 150px;
+        box-shadow: 5px 0px 5px rgb(34, 40, 49);
+        margin-right: 10px;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -27,8 +122,8 @@
               </div>
           </div>
           <div class="header_nav_bar">
-              <div class="header_nav_bar_item active">
-              <a href="./home.php"><div class="header_nav_bar_item_text"><p>Home</p></div></a>
+              <div class="header_nav_bar_item ">
+              <a href="./menu.php"><div class="header_nav_bar_item_text active"><p>Menu</p></div></a>
               </div>
               <div class="header_nav_bar_item">
                   <a href="./order.php"><div class="header_nav_bar_item_text"><p>Order</p></div></a>
@@ -53,7 +148,7 @@
           </div>
       </div>
       <div class="header_nav_bar_mobile" id="mobileMenu">
-        <a href="./home.php"><div class="header_nav_bar_mobile_item">Home</div></a>
+        <a href="./menu.php"><div class="header_nav_bar_mobile_item active">Menu</div></a>
         <a href="./order.php"><div class="header_nav_bar_mobile_item">Order</div></a>
         <a href="./sploff.php"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
         <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">Contact</div></a>
@@ -61,175 +156,183 @@
         <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
       </div>
       <div class="main">
-        <div class="slides" id="slider">
-          <div class="frame" style="margin-top:0px;">
-            <div class="frame_background">
-              <div class="frame_texts">
-                <div class="frame_texts_title">Reservation</div>
-                <div class="frame_texts_description">Book a Room, Reserve a Table and Enjoy your stay</div>
-                <div class="frame_texts_links">
-                  <div class="frame_texts_links_item">Reserve Room</div>
-                  <div class="frame_texts_links_item">Reserve Table</div>
+        <div class="tabbed_pane">
+            <div class="tab_head">
+              <div class="tab_header active_tab" style="border-left: 0px solid black;" onclick="openTab(event, 'Appetizers')"><div class="tab_header_item" >Appetizers</div></div>
+              <div class="tab_header" onclick="openTab(event, 'MainCourse')"><div class="tab_header_item">Main Course</div></div>
+              <div class="tab_header" onclick="openTab(event, 'Deserts')"><div class="tab_header_item">Deserts</div></div>
+              <div class="tab_header" style="border-right: 0px solid black;" onclick="openTab(event, 'Drinks')"><div class="tab_header_item">Drinks</div></div>
+            </div>
+            <div class="tab_body">
+              <div class="tab_body_grp active_grp" id="Appetizers">
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Bruschetta</div>
+                    <div class="tab_body_grp_item_text_description">Toasted bread topped with fresh tomatoes, basil, and olive oil.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="bruschetta.jpg" alt="Bruschetta Photo" style="width:100%;height:100%;">
+                  </div>
                 </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Spring Rolls</div>
+                    <div class="tab_body_grp_item_text_description">Crispy rolls filled with vegetables and served with dipping sauce.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="springrolls.jpg" alt="Spring Rolls Photo" style="width:100%;height:100%;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Caprese Salad</div>
+                    <div class="tab_body_grp_item_text_description">Fresh mozzarella and tomatoes with basil and balsamic glaze.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="capresesalad.jpg" alt="Caprese Salad Photo" style="width:100%;height:100%;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Stuffed Mushrooms</div>
+                    <div class="tab_body_grp_item_text_description">Cheese and herb filled mushrooms, baked until golden brown.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="stuffedmushrooms.jpg" alt="Stuffed Mushrooms Photo" style="width:100%;height:100%;">
+                  </div>
+                </div>                
               </div>
-              <div class="frame_img" >
-                <div class="frame_img_item" style="background-color: aliceblue;"></div>
-                <div class="frame_img_item" style="background-color: antiquewhite;"></div>
-                <div class="frame_img_item" style="background-color: aqua;"></div>
-                <div class="frame_img_item" style="background-color: aquamarine;"></div>
+              <div class="tab_body_grp active_grp" id="MainCourse">
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Grilled Salmon</div>
+                    <div class="tab_body_grp_item_text_description">Freshly grilled salmon with a lemon herb butter sauce.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="grilledsalmon.jpg" alt="Grilled Salmon Photo" style="width:100%;height:100%;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Chicken Alfredo Pasta</div>
+                    <div class="tab_body_grp_item_text_description">Creamy Alfredo pasta topped with grilled chicken and parmesan cheese.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="chickenalfredopasta.jpg" alt="Chicken Alfredo Pasta Photo" style="width:100%;height:100%;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Vegetable Stir Fry</div>
+                    <div class="tab_body_grp_item_text_description">A mix of stir-fried vegetables served over steamed rice.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="./vegetablestirfry.jpg" alt="Vegetable Stir Fry Photo" style="width:100%;height:100%;">
+                  </div>
+                </div> 
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Shrimp Scampi</div>
+                    <div class="tab_body_grp_item_text_description">Sautéed shrimp in a garlic butter sauce, served over linguine.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="shrimpscampi.jpeg" alt="Shrimp Scampi Photo" style="width:100%;height:100%;">
+                  </div>
+                </div>              
+              </div>
+              <div class="tab_body_grp active_grp" id="Deserts">
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Chocolate Lava Cake</div>
+                    <div class="tab_body_grp_item_text_description">Warm chocolate cake with a gooey center, served with vanilla ice cream.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/chocolatelavacake.jpg" alt="Chocolate Lava Cake Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Cheesecake</div>
+                    <div class="tab_body_grp_item_text_description">Creamy cheesecake with a graham cracker crust, topped with fresh berries.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/cheesecake.jpg" alt="Cheesecake Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Tiramisu</div>
+                    <div class="tab_body_grp_item_text_description">Layered Italian dessert made with ladyfingers, mascarpone cheese, and espresso.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/tiramisu.jpg" alt="Tiramisu Photo" style="width:100px;height:100px;">
+                  </div>
+                </div> 
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Fruit Tart</div>
+                    <div class="tab_body_grp_item_text_description">Crisp pastry shell filled with custard and topped with seasonal fruits.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/fruittart.jpg" alt="Fruit Tart Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>              
+              </div>
+              <div class="tab_body_grp active_grp" id="Drinks">
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Iced Tea</div>
+                    <div class="tab_body_grp_item_text_description">Chilled black tea served with lemon and a hint of sugar.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/icedtea.jpg" alt="Iced Tea Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Lemonade</div>
+                    <div class="tab_body_grp_item_text_description">Freshly squeezed lemon juice mixed with water and sugar.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/lemonade.jpg" alt="Lemonade Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Mojito</div>
+                    <div class="tab_body_grp_item_text_description">A refreshing cocktail with lime, mint, sugar, and rum.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/mojito.jpg" alt="Mojito Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>
+                <div class="tab_body_grp_item">
+                  <div class="tab_body_grp_item_text">
+                    <div class="tab_body_grp_item_text_name">Smoothie</div>
+                    <div class="tab_body_grp_item_text_description">A blend of fruits, yogurt, and honey for a healthy treat.</div>
+                    <div class="tab_body_grp_item_text_price">uvw.xy/-</div>
+                  </div>
+                  <div class="tab_body_grp_item_img">
+                    <img src="https://example.com/smoothie.jpg" alt="Smoothie Photo" style="width:100px;height:100px;">
+                  </div>
+                </div>                
               </div>
             </div>
-          </div>
-          <div class="frame">
-            <div class="frame_background">
-              <div class="frame_texts">
-                <div class="frame_texts_title">Events</div>
-              </div>
-              <div class="frame_img">
-                <div class="frame_img_item" style="background-color: aliceblue;">
-                  <div class="event">
-                    <div class="event_title">
-                        <h2>Event 1</h2>
-                    </div>
-                    <div class="event_body">
-                        <div class="event_body_description">
-                            <p>Event Description</p>
-                            <p>Event date:</p>
-                            <p>Event Venue:</p>
-                        </div>
-                        <div class="event_body_img"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="frame_img_item" style="background-color: antiquewhite;">
-                  <div class="event">
-                      <div class="event_title">
-                          <h2>Event 2</h2>
-                      </div>
-                      <div class="event_body">
-                          <div class="event_body_description">
-                              <p>Event Description</p>
-                              <p>Event date:</p>
-                              <p>Event Venue:</p>
-                          </div>
-                          <div class="event_body_img">
-                              <!-- Image can be placed here -->
-                          </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="frame_img_item" style="background-color: aqua;">
-                  <div class="event">
-                      <div class="event_title">
-                          <h2>Event 3</h2>
-                      </div>
-                      <div class="event_body">
-                          <div class="event_body_description">
-                              <p>Event Description:</p>
-                              <p>Event date:</p>
-                              <p>Event Venue:</p>
-                          </div>
-                          <div class="event_body_img">
-                              <!-- Image can be placed here -->
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                <div class="frame_img_item" style="background-color: aquamarine;">
-                  <div class="event">
-                      <div class="event_title">
-                          <h2>Event 4</h2>
-                      </div>
-                      <div class="event_body">
-                          <div class="event_body_description">
-                              <p>Event Description</p>
-                              <p>Event date:</p>
-                              <p>Event Venue:</p>
-                          </div>
-                          <div class="event_body_img">
-                              <!-- Image can be placed here -->
-                          </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="frame">
-            <div class="frame_background">
-              <div class="frame_texts">
-                <div class="frame_texts_title">Ratings</div>
-                <div class="frame_texts_description">Best Ratings we've got.</div>
-                <div class="frame_texts_links">
-                  <div class="frame_texts_links_item">Rate</div>
-                </div>
-              </div>
-              <div class="frame_img">
-                <div class="frame_img_item" style="background-color: aliceblue;">
-                  <div class="review">
-                    <div class="review_profile">
-                      <div class="review_profile_img"></div>
-                      <div class="review_profile_name">Profile</div>
-                    </div>
-                    <div class="review_description">
-                        Best Place
-                    </div>
-                  </div>
-                </div>
-                <div class="frame_img_item" style="background-color: antiquewhite;">
-                  <div class="review">
-                    <div class="review_profile">
-                      <div class="review_profile_img"></div>
-                      <div class="review_profile_name">Profile</div>
-                    </div>
-                    <div class="review_description">
-                        Best Place
-                    </div>
-                  </div>
-                </div>
-                <div class="frame_img_item" style="background-color: aqua;">
-                  <div class="review">
-                    <div class="review_profile">
-                      <div class="review_profile_img"></div>
-                      <div class="review_profile_name">Profile</div>
-                    </div>
-                    <div class="review_description">
-                        Best Place
-                    </div>
-                  </div>
-                </div>
-                <div class="frame_img_item" style="background-color: aquamarine;">
-                  <div class="review">
-                    <div class="review_profile">
-                      <div class="review_profile_img"></div>
-                      <div class="review_profile_name">Profile</div>
-                    </div>
-                    <div class="review_description">
-                        Best Place
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="frame" style="margin-bottom:0px;">
-            <div class="frame_background">
-              <div class="frame_texts">
-                <div class="frame_texts_title">Gallery</div>
-                <div class="frame_texts_description"></div>
-                <div class="frame_texts_links">
-                </div>
-              </div>
-              <div class="frame_img">
-                <div class="frame_img_item" style="background-color: aliceblue;"></div>
-                <div class="frame_img_item" style="background-color: antiquewhite;"></div>
-                <div class="frame_img_item" style="background-color: aqua;"></div>
-                <div class="frame_img_item" style="background-color: aquamarine;"></div>
-                <div class="frame_img_item" style="background-color: azure;"></div>
-                <div class="frame_img_item" style="background-color: beige;"></div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="video_background">
           <video id="video-background" autoplay loop muted>
@@ -239,20 +342,69 @@
         </div>
       </div>
       <div class="footer">
-        <div class="footer_item">
-            <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
-        </div>
-        <div class="footer_item">
-            <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
-        </div>
-        <div class="footer_item">
-            <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
-        </div>
-        <div class="footer_item">
-            <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
-        </div>
-    </div>
+          <div class="footer_item">
+              <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
+          </div>
+          <div class="footer_item">
+              <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
+          </div>
+          <div class="footer_item">
+              <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
+          </div>
+          <div class="footer_item">
+              <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
+          </div>
+      </div>
     </div>
   </body>
-  <script src="./global.js"></script>
+  <script>
+    function autoScroll() {
+      const scrollContainers = document.querySelectorAll('.frame_img');
+      scrollContainers.forEach((scrollable) => {
+        const scrollContent = scrollable.querySelectorAll('.frame_img_item');
+        let scrollPosition = 0;
+
+        function scrollStep() {
+          scrollPosition += 1; // Adjust the speed by changing the increment
+          if (scrollPosition >= scrollable.scrollWidth - scrollable.clientWidth) {
+            scrollPosition = 0; // Reset to the start if reached the end
+          }
+          scrollable.scrollLeft = scrollPosition;
+          requestAnimationFrame(scrollStep);
+        }
+
+        scrollStep(); // Start the scrolling
+      });
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const hamburger = document.querySelector('.header_hamburger');
+        const navBarMobile = document.querySelector('.header_nav_bar_mobile');
+
+        hamburger.addEventListener('click', function() {
+            navBarMobile.style.display = navBarMobile.style.display === 'none' ? 'flex' : 'none';
+        });
+    });
+    window.onload = autoScroll;
+
+    function openTab(evt, tabName) {
+      var i, tab_body_grp, tab_header;
+      tab_body_grp = document.getElementsByClassName("tab_body_grp");
+      for (i = 0; i < tab_body_grp.length; i++) {
+        tab_body_grp[i].style.display = "none";
+        tab_body_grp[i].classList.remove("active_grp");
+      }
+      tab_header = document.getElementsByClassName("tab_header");
+      for (i = 0; i < tab_header.length; i++) {
+        tab_header[i].classList.remove("active_tab");
+      }
+      document.getElementById(tabName).style.display = "block";
+      document.getElementById(tabName).classList.add("active_grp");
+      evt.currentTarget.classList.add("active_tab");
+    }
+
+    // Ensure the first tab is displayed by default
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelector(".tab_header.active_tab").click();
+    });
+  </script>
 </html>

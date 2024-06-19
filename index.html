@@ -28,7 +28,7 @@
           </div>
           <div class="header_nav_bar">
               <div class="header_nav_bar_item active">
-              <a href="./home.php"><div class="header_nav_bar_item_text"><p>Home</p></div></a>
+              <a href="./menu.html"><div class="header_nav_bar_item_text"><p>Menu</p></div></a>
               </div>
               <div class="header_nav_bar_item">
                   <a href="./order.php"><div class="header_nav_bar_item_text"><p>Order</p></div></a>
@@ -53,7 +53,7 @@
           </div>
       </div>
       <div class="header_nav_bar_mobile" id="mobileMenu">
-        <a href="./home.php"><div class="header_nav_bar_mobile_item">Home</div></a>
+        <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
         <a href="./order.php"><div class="header_nav_bar_mobile_item">Order</div></a>
         <a href="./sploff.php"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
         <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">Contact</div></a>
@@ -254,5 +254,33 @@
     </div>
     </div>
   </body>
-  <script src="./global.js"></script>
+  <script>
+    function autoScroll() {
+      const scrollContainers = document.querySelectorAll('.frame_img');
+      scrollContainers.forEach((scrollable) => {
+        const scrollContent = scrollable.querySelectorAll('.frame_img_item');
+        let scrollPosition = 0;
+
+        function scrollStep() {
+          scrollPosition += 1; // Adjust the speed by changing the increment
+          if (scrollPosition >= scrollable.scrollWidth - scrollable.clientWidth) {
+            scrollPosition = 0; // Reset to the start if reached the end
+          }
+          scrollable.scrollLeft = scrollPosition;
+          requestAnimationFrame(scrollStep);
+        }
+
+        scrollStep(); // Start the scrolling
+      });
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const hamburger = document.querySelector('.header_hamburger');
+        const navBarMobile = document.querySelector('.header_nav_bar_mobile');
+
+        hamburger.addEventListener('click', function() {
+            navBarMobile.style.display = navBarMobile.style.display === 'none' ? 'flex' : 'none';
+        });
+    });
+    window.onload = autoScroll;
+  </script>
 </html>
