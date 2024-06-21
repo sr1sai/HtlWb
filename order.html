@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css">
+    <script src="./global.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic Sans MS:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Copse:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Delius Unicase:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dhyana:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=David Libre:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Droid Sans:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inria Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      .active{
+        color: rgb(34, 40, 49);
+        background-color: rgb(238, 238, 238);
+      }
+      .form{
+        padding: 20px;
+        height: 80%;
+        width: 80%;
+        border-radius: 80px;
+        border: 1px solid rgb(160, 160, 160);
+        background-color: rgb(238, 238, 238);
+        color: rgb(34, 40, 49);
+        font-family: 'Comic Sans MS';
+        font-size: 140%;
+        overflow: auto; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .orderForm_item{
+        width: 80%;
+        margin: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 1px solid black;
+      }
+      .preview{
+        border: 1px solid blue;
+      }
+      @media (max-width: 768px) {
+        
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+          <div class="header_logo">
+              <div class="header_logo_square">
+                <a href="./home.php"><img src="https://www.kaldanhotels.com/images/logo.png" alt="logo" style="width:140px;height:80px;"></a>
+              </div>
+          </div>
+          <div class="header_nav_bar">
+              <div class="header_nav_bar_item">
+              <a href="./menu.html"><div class="header_nav_bar_item_text"><p>Menu</p></div></a>
+              </div>
+              <div class="header_nav_bar_item">
+                  <a href="./order.html"><div class="header_nav_bar_item_text active"><p>Order</p></div></a>
+              </div>
+              <div class="header_nav_bar_item">
+                  <a href="./sploff.php"><div class="header_nav_bar_item_text"><p>Special Offers</p></div></a>
+              </div>
+              <div class="header_nav_bar_item">
+                  <a href="./newsltr.php"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
+              </div>
+              <div class="header_nav_bar_item">
+                  <a href="./about.php"><div class="header_nav_bar_item_text"><p>About</p></div></a>
+              </div>
+              <div class="header_nav_bar_item">
+                  <a href="./index.php"><div class="header_nav_bar_item_text"><p>Log Out</p></div></a>
+              </div>
+          </div>
+          <div class="header_hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+      </div>
+      <div class="header_nav_bar_mobile" id="mobileMenu">
+        <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
+        <a href="./order.html"><div class="header_nav_bar_mobile_item active">Order</div></a>
+        <a href="./sploff.php"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
+        <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">Contact</div></a>
+        <a href="./about.php"><div class="header_nav_bar_mobile_item">About</div></a>
+        <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
+      </div>
+      <div class="main">
+        <div class="form">
+          <form id="orderForm">
+            <div class="orderForm_item">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="orderForm_item">
+              <label for="mobile">Mobile:</label>
+              <input type="text" id="mobile" name="mobile" required>
+            </div>
+            
+            <div class="orderForm_item">
+              <label for="orderType">Order Type:</label>
+              <select id="orderType" name="orderType" required>
+                <option value="takeaway">Take Away</option>
+                <option value="homedelivery">Home Delivery</option>
+              </select>
+            </div>
+            <div class="orderForm_item">
+              <div id="addressDiv" style="display: none;">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address">
+              </div>
+            </div>
+            <div class="orderForm_item orderForm_food">
+              <div class="orderForm_food_item">
+                <label for="foodItem">Select Food Item:</label>
+                <select id="foodItem" name="foodItem">
+                  <option value="">--Select--</option>
+                  <option value="Bruschetta" data-img="img/bruschetta.jpg" data-price="150">Bruschetta - ₹150</option>
+                  <option value="Spring Rolls" data-img="img/springrolls.jpg" data-price="120">Spring Rolls - ₹120</option>
+                  <option value="Caprese Salad" data-img="img/capresesalad.jpg" data-price="180">Caprese Salad - ₹180</option>
+                  <option value="Stuffed Mushrooms" data-img="img/stuffedmushrooms.jpg" data-price="200">Stuffed Mushrooms - ₹200</option>
+                  <option value="Grilled Salmon" data-img="img/grilledsalmon.jpg" data-price="300">Grilled Salmon - ₹300</option>
+                  <option value="Chicken Alfredo Pasta" data-img="img/chickenalfredopasta.jpg" data-price="250">Chicken Alfredo Pasta - ₹250</option>
+                  <option value="Vegetable Stir Fry" data-img="img/vegetablestirfry.jpg" data-price="150">Vegetable Stir Fry - ₹150</option>
+                  <option value="Shrimp Scampi" data-img="img/shrimpscampi.jpeg" data-price="280">Shrimp Scampi - ₹280</option>
+                  <option value="Chocolate Lava Cake" data-img="img/chocolatelavacake.jpg" data-price="180">Chocolate Lava Cake - ₹180</option>
+                  <option value="Cheesecake" data-img="img/cheesecake.jpg" data-price="200">Cheesecake - ₹200</option>
+                  <option value="Tiramisu" data-img="img/tiramisu.jpg" data-price="220">Tiramisu - ₹220</option>
+                  <option value="Fruit Tart" data-img="img/fruittart.jpg" data-price="150">Fruit Tart - ₹150</option>
+                  <option value="Iced Tea" data-img="img/icedtea.jpg" data-price="100">Iced Tea - ₹100</option>
+                  <option value="Lemonade" data-img="img/lemonade.jpg" data-price="90">Lemonade - ₹90</option>
+                  <option value="Mojito" data-img="img/mojito.jpg" data-price="150">Mojito - ₹150</option>
+                  <option value="Smoothie" data-img="img/smoothie.jpg" data-price="130">Smoothie - ₹130</option>
+                </select>
+              </div>
+              <div class="preview" id="preview">
+                <p>preview.</p>
+              </div>
+            </div>
+            <div class="orderForm_item">
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity" min="1" value="1">
+            </div>
+            <div class="orderForm_item">
+              <button type="button" onclick="addItem()">Add Item</button>
+            </div>
+            <div class="orderForm_item orderForm_selected-items">
+              <div id="selectedItems"></div>
+            </div>
+            <div class="orderForm_item">
+              <p>Total: ₹<span id="totalPrice">0</span></p>
+            </div>
+            <div class="orderForm_item">
+              <button type="submit">Submit Order</button>
+            </div>
+          </form>
+        </div>
+        <div class="video_background">
+          <video id="video-background" autoplay loop muted>
+              <source src="./vid_1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer_item">
+            <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
+        </div>
+        <div class="footer_item">
+            <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
+        </div>
+        <div class="footer_item">
+            <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./img/gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
+        </div>
+        <div class="footer_item">
+            <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
+        </div>
+    </div>
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const hamburger = document.querySelector('.header_hamburger');
+      const navBarMobile = document.querySelector('.header_nav_bar_mobile');
+
+      hamburger.addEventListener('click', function() {
+          navBarMobile.style.display = navBarMobile.style.display === 'none' ? 'flex' : 'none';
+      });
+    });
+    document.getElementById('orderType').addEventListener('change', function() {
+        if (this.value === 'homedelivery') {
+            document.getElementById('addressDiv').style.display = 'block';
+        } else {
+            document.getElementById('addressDiv').style.display = 'none';
+        }
+    });
+
+    document.getElementById('foodItem').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var imgSrc = selectedOption.getAttribute('data-img');
+        if (imgSrc) {
+            document.getElementById('preview').innerHTML = '<img src="' + imgSrc + '" alt="' + selectedOption.text + '">';
+        } else {
+            document.getElementById('preview').innerHTML = '<p>Select an item to see the preview here.</p>';
+        }
+    });
+
+    function addItem() {
+      var foodItemSelect = document.getElementById('foodItem');
+      var quantityInput = document.getElementById('quantity');
+      var selectedOption = foodItemSelect.options[foodItemSelect.selectedIndex];
+      var selectedItem = selectedOption.text;
+      var price = selectedOption.getAttribute('data-price');
+      var quantity = quantityInput.value;
+
+      if (selectedItem !== "--Select--" && quantity > 0) {
+          var selectedItemsDiv = document.getElementById('selectedItems');
+          var itemDiv = document.createElement('div');
+          itemDiv.classList.add('item-row');
+          itemDiv.innerHTML = '<div>' + selectedItem + ' x ' + quantity + ' - ₹' + (price * quantity) + '</div>' +
+                              '<div><button type="button" onclick="removeItem(this)">Remove</button></div>';
+          selectedItemsDiv.appendChild(itemDiv);
+
+          updateTotal();
+      }
+    }
+
+    function removeItem(button) {
+      var itemDiv = button.parentElement.parentElement;
+      itemDiv.parentElement.removeChild(itemDiv);
+      updateTotal();
+    }
+
+    function updateTotal() {
+      var selectedItemsDiv = document.getElementById('selectedItems');
+      var itemRows = selectedItemsDiv.getElementsByClassName('item-row');
+      var total = 0;
+
+      for (var i = 0; i < itemRows.length; i++) {
+        var itemRow = itemRows[i];
+        var itemText = itemRow.children[0].innerText;
+        var priceAndQuantity = itemText.split(' - ₹')[1].split(' x ');
+        var itemPrice = parseFloat(priceAndQuantity[0]);
+        var itemQuantity = parseInt(priceAndQuantity[1]);
+        total += itemPrice * itemQuantity;
+      }
+
+      document.getElementById('totalPrice').innerText = total;
+    }
+
+  </script>
+</html>
