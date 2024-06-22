@@ -18,40 +18,104 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-      .active{
+      .active {
         color: rgb(34, 40, 49);
         background-color: rgb(238, 238, 238);
       }
-      .form{
+      .form {
         padding: 20px;
-        height: 80%;
         width: 80%;
-        border-radius: 80px;
-        border: 1px solid rgb(160, 160, 160);
-        background-color: rgb(238, 238, 238);
-        color: rgb(34, 40, 49);
-        font-family: 'Comic Sans MS';
-        font-size: 140%;
-        overflow: auto; 
+        height: 80%;
+        border-radius: 20px;
+        border: 1px solid #a0a0a0;
+        background-color: rgba(238, 238, 238,0.8);
+        color: #222831;
+        font-size: 1.4em;
+        overflow: auto;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
       }
-      .orderForm_item{
-        width: 80%;
-        margin: 10px;
+      #orderForm {
+        width: 100%;
         display: flex;
         flex-direction: row;
-        align-items: center;
         justify-content: space-around;
-        border: 1px solid black;
       }
-      .preview{
-        border: 1px solid blue;
+      .col {
+        width: 33.33%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .orderForm_item {
+        width: 90%;
+        margin: 10px 0;
+      }
+      .orderForm_item input, 
+      .orderForm_item select, 
+      .orderForm_item button {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 1em;
+      }
+      .orderForm_item button {
+        color: black;
+        cursor: pointer;
+        border: 1px solid black;
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+      }
+      .orderForm_item button:hover {
+        color: white;
+        background-color: rgb(0, 173, 181);
+      }
+      .preview {
+        border: 1px solid rgb(238, 238, 238);
+        height: 150px;
+        width: 150px;
+        text-align: center;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+      .preview_img{
+        width: 150px;
+        height: 150px;
+      }
+      .orderForm_selected-items {
+        max-height: 255px;
+      }
+
+      #selectedItems {
+        height: 100%;
+        overflow-y: scroll;
+        background-color: #fff;
+      }
+      .item-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+      }
+      .remove button:hover{
+        cursor: pointer;
+        color: white;
+        background-color: rgb(255, 0, 0);
       }
       @media (max-width: 768px) {
-        
+        #orderForm {
+          flex-direction: column;
+          align-items: center;
+        }
+        .col {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -71,7 +135,7 @@
                   <a href="./order.html"><div class="header_nav_bar_item_text active"><p>Order</p></div></a>
               </div>
               <div class="header_nav_bar_item">
-                  <a href="./sploff.php"><div class="header_nav_bar_item_text"><p>Special Offers</p></div></a>
+                  <a href="./specialoffers.html"><div class="header_nav_bar_item_text"><p>Special Offers</p></div></a>
               </div>
               <div class="header_nav_bar_item">
                   <a href="./newsltr.php"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
@@ -92,7 +156,7 @@
       <div class="header_nav_bar_mobile" id="mobileMenu">
         <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
         <a href="./order.html"><div class="header_nav_bar_mobile_item active">Order</div></a>
-        <a href="./sploff.php"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
+        <a href="./specialoffers.html"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
         <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">Contact</div></a>
         <a href="./about.php"><div class="header_nav_bar_mobile_item">About</div></a>
         <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
@@ -100,70 +164,75 @@
       <div class="main">
         <div class="form">
           <form id="orderForm">
-            <div class="orderForm_item">
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="orderForm_item">
-              <label for="mobile">Mobile:</label>
-              <input type="text" id="mobile" name="mobile" required>
-            </div>
-            
-            <div class="orderForm_item">
-              <label for="orderType">Order Type:</label>
-              <select id="orderType" name="orderType" required>
-                <option value="takeaway">Take Away</option>
-                <option value="homedelivery">Home Delivery</option>
-              </select>
-            </div>
-            <div class="orderForm_item">
-              <div id="addressDiv" style="display: none;">
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address">
+            <div class="col">
+              <div class="orderForm_item">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required>
               </div>
-            </div>
-            <div class="orderForm_item orderForm_food">
-              <div class="orderForm_food_item">
-                <label for="foodItem">Select Food Item:</label>
-                <select id="foodItem" name="foodItem">
-                  <option value="">--Select--</option>
-                  <option value="Bruschetta" data-img="img/bruschetta.jpg" data-price="150">Bruschetta - ₹150</option>
-                  <option value="Spring Rolls" data-img="img/springrolls.jpg" data-price="120">Spring Rolls - ₹120</option>
-                  <option value="Caprese Salad" data-img="img/capresesalad.jpg" data-price="180">Caprese Salad - ₹180</option>
-                  <option value="Stuffed Mushrooms" data-img="img/stuffedmushrooms.jpg" data-price="200">Stuffed Mushrooms - ₹200</option>
-                  <option value="Grilled Salmon" data-img="img/grilledsalmon.jpg" data-price="300">Grilled Salmon - ₹300</option>
-                  <option value="Chicken Alfredo Pasta" data-img="img/chickenalfredopasta.jpg" data-price="250">Chicken Alfredo Pasta - ₹250</option>
-                  <option value="Vegetable Stir Fry" data-img="img/vegetablestirfry.jpg" data-price="150">Vegetable Stir Fry - ₹150</option>
-                  <option value="Shrimp Scampi" data-img="img/shrimpscampi.jpeg" data-price="280">Shrimp Scampi - ₹280</option>
-                  <option value="Chocolate Lava Cake" data-img="img/chocolatelavacake.jpg" data-price="180">Chocolate Lava Cake - ₹180</option>
-                  <option value="Cheesecake" data-img="img/cheesecake.jpg" data-price="200">Cheesecake - ₹200</option>
-                  <option value="Tiramisu" data-img="img/tiramisu.jpg" data-price="220">Tiramisu - ₹220</option>
-                  <option value="Fruit Tart" data-img="img/fruittart.jpg" data-price="150">Fruit Tart - ₹150</option>
-                  <option value="Iced Tea" data-img="img/icedtea.jpg" data-price="100">Iced Tea - ₹100</option>
-                  <option value="Lemonade" data-img="img/lemonade.jpg" data-price="90">Lemonade - ₹90</option>
-                  <option value="Mojito" data-img="img/mojito.jpg" data-price="150">Mojito - ₹150</option>
-                  <option value="Smoothie" data-img="img/smoothie.jpg" data-price="130">Smoothie - ₹130</option>
+              <div class="orderForm_item">
+                <label for="mobile">Mobile:</label><br>
+                <input type="text" id="mobile" name="mobile" required>
+              </div>
+              <div class="orderForm_item">
+                <label for="orderType">Order Type:</label><br>
+                <select id="orderType" name="orderType" required>
+                  <option value="takeaway">Take Away</option>
+                  <option value="homedelivery">Home Delivery</option>
                 </select>
               </div>
-              <div class="preview" id="preview">
-                <p>preview.</p>
+              <div class="orderForm_item">
+                <div id="addressDiv" style="display: none;">
+                  <label for="address">Address:</label><br>
+                  <input type="text" id="address" name="address">
+                </div>
               </div>
             </div>
-            <div class="orderForm_item">
-              <label for="quantity">Quantity:</label>
-              <input type="number" id="quantity" name="quantity" min="1" value="1">
+            <div class="col">
+              <div class="orderForm_item orderForm_food">
+                <div class="orderForm_food_item">
+                  <label for="foodItem">Select Food Item:</label><br>
+                  <select id="foodItem" name="foodItem">
+                    <option value="">--Select--</option>
+                    <option value="Bruschetta" data-img="img/bruschetta.jpg" data-price="150">Bruschetta - ₹150</option>
+                    <option value="Spring Rolls" data-img="img/springrolls.jpg" data-price="120">Spring Rolls - ₹120</option>
+                    <option value="Caprese Salad" data-img="img/capresesalad.jpg" data-price="180">Caprese Salad - ₹180</option>
+                    <option value="Stuffed Mushrooms" data-img="img/stuffedmushrooms.jpg" data-price="200">Stuffed Mushrooms - ₹200</option>
+                    <option value="Grilled Salmon" data-img="img/grilledsalmon.jpg" data-price="300">Grilled Salmon - ₹300</option>
+                    <option value="Chicken Alfredo Pasta" data-img="img/chickenalfredopasta.jpg" data-price="250">Chicken Alfredo Pasta - ₹250</option>
+                    <option value="Vegetable Stir Fry" data-img="img/vegetablestirfry.jpg" data-price="150">Vegetable Stir Fry - ₹150</option>
+                    <option value="Shrimp Scampi" data-img="img/shrimpscampi.jpeg" data-price="280">Shrimp Scampi - ₹280</option>
+                    <option value="Chocolate Lava Cake" data-img="img/chocolatelavacake.jpg" data-price="180">Chocolate Lava Cake - ₹180</option>
+                    <option value="Cheesecake" data-img="img/cheesecake.jpg" data-price="200">Cheesecake - ₹200</option>
+                    <option value="Tiramisu" data-img="img/tiramisu.jpg" data-price="220">Tiramisu - ₹220</option>
+                    <option value="Fruit Tart" data-img="img/fruittart.jpg" data-price="150">Fruit Tart - ₹150</option>
+                    <option value="Iced Tea" data-img="img/icedtea.jpg" data-price="100">Iced Tea - ₹100</option>
+                    <option value="Lemonade" data-img="img/lemonade.jpg" data-price="90">Lemonade - ₹90</option>
+                    <option value="Mojito" data-img="img/mojito.jpg" data-price="150">Mojito - ₹150</option>
+                    <option value="Smoothie" data-img="img/smoothie.jpg" data-price="130">Smoothie - ₹130</option>
+                  </select>
+                </div>
+                <div class="preview" id="preview">
+                  <p>preview.</p>
+                </div>
+              </div>
+              <div class="orderForm_item">
+                <label for="quantity">Quantity:</label><br>
+                <input type="number" id="quantity" name="quantity" min="1" value="1">
+              </div>
+              <div class="orderForm_item">
+                <button type="button" onclick="addItem()">Add Item</button>
+              </div>
             </div>
-            <div class="orderForm_item">
-              <button type="button" onclick="addItem()">Add Item</button>
-            </div>
-            <div class="orderForm_item orderForm_selected-items">
-              <div id="selectedItems"></div>
-            </div>
-            <div class="orderForm_item">
-              <p>Total: ₹<span id="totalPrice">0</span></p>
-            </div>
-            <div class="orderForm_item">
-              <button type="submit">Submit Order</button>
+            <div class="col">
+              <div class="orderForm_item orderForm_selected-items">
+                <div id="selectedItems"></div>
+              </div>
+              <div class="orderForm_item">
+                <p>Total: ₹<span id="totalPrice">0</span></p>
+              </div>
+              <div class="orderForm_item">
+                <button type="submit">Submit Order</button>
+              </div>
             </div>
           </form>
         </div>
@@ -211,7 +280,7 @@
         var selectedOption = this.options[this.selectedIndex];
         var imgSrc = selectedOption.getAttribute('data-img');
         if (imgSrc) {
-            document.getElementById('preview').innerHTML = '<img src="' + imgSrc + '" alt="' + selectedOption.text + '">';
+            document.getElementById('preview').innerHTML = '<img class="preview_img" src="' + imgSrc + '" alt="' + selectedOption.text + '">';
         } else {
             document.getElementById('preview').innerHTML = '<p>Select an item to see the preview here.</p>';
         }
@@ -230,7 +299,7 @@
           var itemDiv = document.createElement('div');
           itemDiv.classList.add('item-row');
           itemDiv.innerHTML = '<div>' + selectedItem + ' x ' + quantity + ' - ₹' + (price * quantity) + '</div>' +
-                              '<div><button type="button" onclick="removeItem(this)">Remove</button></div>';
+                              '<div class="remove"><button type="button" onclick="removeItem(this)">Remove</button></div>';
           selectedItemsDiv.appendChild(itemDiv);
 
           updateTotal();

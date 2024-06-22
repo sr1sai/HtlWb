@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link rel="stylesheet" href="./global.css">
+        <script src="./global.js"></script>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic Sans MS:wght@400&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Copse:wght@400&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Delius Unicase:wght@700&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dhyana:wght@700&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=David Libre:wght@400&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Droid Sans:wght@400&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inria Sans:wght@700&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM Sans:wght@700&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            .active{
+                color: rgb(34, 40, 49);
+                background-color: rgb(238, 238, 238);
+            }
+            .deck{
+                display: grid;
+                grid-template-columns: auto auto auto;
+                overflow: auto;
+            }
+            .offer_card{
+                width: 400px;
+                height:400px;
+                padding: 20px;
+                margin: 20px;
+                border: 1px solid black;
+                background-color: rgb(238, 238, 238);
+            }
+            .offer_text{
+                
+            }
+            .offer_text_name{
+                
+            }
+            .offer_text_description{
+                
+            }
+            .offer_img{
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="header_logo">
+                    <div class="header_logo_square">
+                        <a href="./home.php"><img src="https://www.kaldanhotels.com/images/logo.png" alt="logo" style="width:140px;height:80px;"></a>
+                    </div>
+                </div>
+                <div class="header_nav_bar">
+                    <div class="header_nav_bar_item">
+                        <a href="./menu.html"><div class="header_nav_bar_item_text"><p>Menu</p></div></a>
+                    </div>
+                    <div class="header_nav_bar_item">
+                        <a href="./order.html"><div class="header_nav_bar_item_text"><p>Order</p></div></a>
+                    </div>
+                    <div class="header_nav_bar_item">
+                        <a href="./specialoffers.html"><div class="header_nav_bar_item_text active"><p>Special Offers</p></div></a>
+                    </div>
+                    <div class="header_nav_bar_item">
+                        <a href="./newsltr.php"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
+                    </div>
+                    <div class="header_nav_bar_item">
+                        <a href="./about.php"><div class="header_nav_bar_item_text"><p>About</p></div></a>
+                    </div>
+                    <div class="header_nav_bar_item">
+                        <a href="./index.php"><div class="header_nav_bar_item_text"><p>Log Out</p></div></a>
+                    </div>
+            </div>
+            <div class="header_hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            </div>
+            <div class="header_nav_bar_mobile" id="mobileMenu">
+                <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
+                <a href="./order.html"><div class="header_nav_bar_mobile_item">Order</div></a>
+                <a href="./specialoffers.html"><div class="header_nav_bar_mobile_item active">Special Offers</div></a>
+                <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">Contact</div></a>
+                <a href="./about.php"><div class="header_nav_bar_mobile_item">About</div></a>
+                <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
+            </div>
+            <div class="main">
+                <div class="deck">
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Weekend Getaway</div>
+                            <div class="offer_card_text_description">Enjoy a luxurious weekend getaway at our premium location. Includes complimentary breakfast and a city tour.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.tajhotels.com/content/dam/luxury/hotels/Taj_Mahal_Palace_Mumbai/images/Taj-Mahal-Palace-Mumbai.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Romantic Escape</div>
+                            <div class="offer_card_text_description">Experience romance like never before with a special package that includes a candlelight dinner by the lake.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.oberoihotels.com/-/media/oberoi-hotels/udaivilas/overview/16x7/udai-vilas-luxury-hotel-exterior-16x7.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Business Stay</div>
+                            <div class="offer_card_text_description">Make your business trip comfortable with our exclusive business stay package that includes free Wi-Fi and meeting room access.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.itchotels.com/content/dam/itchotels/in/umbrella/itc/hotels/itcmaurya-new-delhi/images/overview/itchotels-itcmaurya-new-delhi-overview.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Family Fun</div>
+                            <div class="offer_card_text_description">Bring your family and enjoy a fun-filled stay with activities for kids and adults, including a poolside barbecue.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.clarksinn.in/images/portfolio/gallery-image1.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Spa Retreat</div>
+                            <div class="offer_card_text_description">Relax and rejuvenate with our spa retreat package. Includes daily spa treatments and healthy meals.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.tajhotels.com/content/dam/luxury/hotels/Taj_Mahal_Palace_Mumbai/images/Taj-Mahal-Palace-Mumbai.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Adventure Package</div>
+                            <div class="offer_card_text_description">For the thrill-seekers, enjoy a stay that includes adventure sports like rock climbing, river rafting, and more.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.example.com/adventure-sports.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Cultural Experience</div>
+                            <div class="offer_card_text_description">Immerse yourself in the local culture with a stay that includes guided tours of historical sites and cultural performances.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.example.com/cultural-experience.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Wellness Retreat</div>
+                            <div class="offer_card_text_description">Focus on your well-being with our wellness retreat package. Includes yoga sessions, meditation classes, and detox meals.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.example.com/wellness-retreat.jpg');"></div>
+                    </div>
+                    <div class="offer_card">
+                        <div class="offer_card_text">
+                            <div class="offer_card_text_name">Gourmet Delight</div>
+                            <div class="offer_card_text_description">Indulge in a culinary adventure with our gourmet delight package. Includes cooking classes with our chefs and gourmet meals.</div>
+                        </div>
+                        <div class="offer_card_img" style="background-image: url('https://www.example.com/gourmet-delight.jpg');"></div>
+                    </div>                    
+                </div>
+                <div class="video_background">
+                    <video id="video-background" autoplay loop muted>
+                        <source src="./vid_1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer_item">
+                    <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
+                </div>
+                <div class="footer_item">
+                    <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
+                </div>
+                <div class="footer_item">
+                    <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./img/gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
+                </div>
+                <div class="footer_item">
+                    <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        function autoScroll() {
+            const scrollContainers = document.querySelectorAll('.frame_img');
+            scrollContainers.forEach((scrollable) => {
+            const scrollContent = scrollable.querySelectorAll('.frame_img_item');
+            let scrollPosition = 0;
+
+            function scrollStep() {
+                scrollPosition += 1; // Adjust the speed by changing the increment
+                if (scrollPosition >= scrollable.scrollWidth - scrollable.clientWidth) {
+                    scrollPosition = 0; // Reset to the start if reached the end
+                }
+                scrollable.scrollLeft = scrollPosition;
+                requestAnimationFrame(scrollStep);
+            }
+
+            scrollStep(); // Start the scrolling
+            });
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            const hamburger = document.querySelector('.header_hamburger');
+            const navBarMobile = document.querySelector('.header_nav_bar_mobile');
+
+            hamburger.addEventListener('click', function() {
+                navBarMobile.style.display = navBarMobile.style.display === 'none' ? 'flex' : 'none';
+            });
+        });
+        window.onload = autoScroll;
+    </script>
+</html>
