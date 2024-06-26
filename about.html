@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css">
+    <script src="./global.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic Sans MS:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Copse:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Delius Unicase:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dhyana:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=David Libre:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Droid Sans:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inria Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+        .title {
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 200%;
+            text-align: center;
+            padding: 20px;
+        }
+        .section {
+            display: none;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        .section.active {
+            display: block;
+        }
+        .quote {
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .description {
+            font-family: 'Copse', sans-serif;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .image {
+            width: 100%;
+            height: 200px;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_logo">
+                <div class="header_logo_square">
+                    <a href="./home.php"><img src="https://www.kaldanhotels.com/images/logo.png" alt="logo" style="width:140px;height:80px;"></a>
+                </div>
+            </div>
+            <div class="header_nav_bar">
+                <div class="header_nav_bar_item">
+                    <a href="./menu.html"><div class="header_nav_bar_item_text"><p>Menu</p></div></a>
+                </div>
+                <div class="header_nav_bar_item">
+                    <a href="./order.html"><div class="header_nav_bar_item_text"><p>Order</p></div></a>
+                </div>
+                <div class="header_nav_bar_item">
+                    <a href="./specialoffers.html"><div class="header_nav_bar_item_text"><p>Special Offers</p></div></a>
+                </div>
+                <div class="header_nav_bar_item">
+                    <a href="./newsletter.html"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
+                </div>
+                <div class="header_nav_bar_item">
+                    <a href="./about.html"><div class="header_nav_bar_item_text active"><p>About</p></div></a>
+                </div>
+                <div class="header_nav_bar_item">
+                    <a href="./index.php"><div class="header_nav_bar_item_text"><p>Log Out</p></div></a>
+                </div>
+            </div>
+            <div class="header_hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="header_nav_bar_mobile" id="mobileMenu">
+            <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
+            <a href="./order.html"><div class="header_nav_bar_mobile_item">Order</div></a>
+            <a href="./sploff.php"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
+            <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">News Letter</div></a>
+            <a href="./about.php"><div class="header_nav_bar_mobile_item active">About</div></a>
+            <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
+        </div>
+        <div class="main">
+            <div class="section active"><div class="title">About Us</div></div>
+            <div class="section ">
+                <div class="quote">"A luxurious experience like no other"</div>
+                <div class="description">
+                    Welcome to Kaldan Samudhra Palace, where opulence meets tradition. Nestled along the serene coast of India, our hotel offers breathtaking views and world-class amenities.
+                </div>
+                <div class="image"></div>
+            </div>
+            <div class="section">
+                <div class="quote">"Exquisite Dining"</div>
+                <div class="description">
+                    Indulge in a culinary journey with our exquisite dining options. From traditional Indian cuisine to international delights, our restaurants cater to every palate.
+                </div>
+                <div class="image"></div>
+            </div>
+            <div class="section">
+                <div class="quote">"Unmatched Hospitality"</div>
+                <div class="description">
+                    At Kaldan Samudhra Palace, we pride ourselves on providing unmatched hospitality. Our dedicated staff ensures your stay is comfortable, memorable, and seamless.
+                </div>
+                <div class="image"></div>
+            </div>
+            <div class="section">
+                <div class="quote">"Events and Celebrations"</div>
+                <div class="description">
+                    Host your events and celebrations at our magnificent venues. Whether it's a wedding, conference, or a private party, we offer the perfect setting for every occasion.
+                </div>
+                <div class="image"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer_item">
+                <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
+            </div>
+            <div class="footer_item">
+                <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
+            </div>
+            <div class="footer_item">
+                <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./img/gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
+            </div>
+            <div class="footer_item">
+                <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll('.section');
+            let currentIndex = 0;
+            let timer;
+
+            function showSection(index) {
+                sections.forEach((section, idx) => {
+                    section.classList.toggle('active', idx === index);
+                });
+            }
+
+            function autoScroll() {
+                timer = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % sections.length;
+                    showSection(currentIndex);
+                }, 2000);
+            }
+
+            function resetTimer() {
+                clearInterval(timer);
+                autoScroll();
+            }
+
+            document.addEventListener('mousemove', resetTimer);
+
+           // autoScroll();
+        });
+    </script>
+</body>
+</html>

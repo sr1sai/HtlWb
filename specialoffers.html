@@ -22,30 +22,63 @@
                 color: rgb(34, 40, 49);
                 background-color: rgb(238, 238, 238);
             }
+            .main{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
             .deck{
-                display: grid;
-                grid-template-columns: auto auto auto;
-                overflow: auto;
+                height: 90%;
+                width: 90%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                margin: 20px 0;
+                overflow-y: auto;
+            }
+            .deck::-webkit-scrollbar {
+                display: none;
             }
             .offer_card{
-                width: 400px;
-                height:400px;
-                padding: 20px;
-                margin: 20px;
-                border: 1px solid black;
-                background-color: rgb(238, 238, 238);
+                width: 30%;
+                margin: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                background-color: #fff;
+                transition: transform 0.3s;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
-            .offer_text{
-                
+            .offer_card:hover {
+                box-shadow: 0 4px 1000px rgb(0,0,0);
+                transform: translateY(-10px);
             }
-            .offer_text_name{
-                
+            .offer_card_img {
+                height: 200px;
+                background-size: cover;
+                background-position: center;
             }
-            .offer_text_description{
-                
+            .offer_card_text {
+                padding: 15px;
             }
-            .offer_img{
-                
+            .offer_card_text_name {
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .offer_card_text_description {
+                font-size: 1em;
+                color: #555;
+            }
+            .offer_card_img{
+                width: 200px;
+                height:150px;
+                background-color: aquamarine;
             }
         </style>
     </head>
@@ -68,7 +101,7 @@
                         <a href="./specialoffers.html"><div class="header_nav_bar_item_text active"><p>Special Offers</p></div></a>
                     </div>
                     <div class="header_nav_bar_item">
-                        <a href="./newsltr.php"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
+                        <a href="./newsletter.html"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
                     </div>
                     <div class="header_nav_bar_item">
                         <a href="./about.php"><div class="header_nav_bar_item_text"><p>About</p></div></a>
@@ -87,7 +120,7 @@
                 <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
                 <a href="./order.html"><div class="header_nav_bar_mobile_item">Order</div></a>
                 <a href="./specialoffers.html"><div class="header_nav_bar_mobile_item active">Special Offers</div></a>
-                <a href="./newsltr.php"><div class="header_nav_bar_mobile_item">Contact</div></a>
+                <a href="./newsletter.html"><div class="header_nav_bar_mobile_item">Contact</div></a>
                 <a href="./about.php"><div class="header_nav_bar_mobile_item">About</div></a>
                 <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
             </div>
@@ -98,7 +131,7 @@
                             <div class="offer_card_text_name">Weekend Getaway</div>
                             <div class="offer_card_text_description">Enjoy a luxurious weekend getaway at our premium location. Includes complimentary breakfast and a city tour.</div>
                         </div>
-                        <div class="offer_card_img" style="background-image: url('https://www.tajhotels.com/content/dam/luxury/hotels/Taj_Mahal_Palace_Mumbai/images/Taj-Mahal-Palace-Mumbai.jpg');"></div>
+                        <div class="offer_card_img"></div>
                     </div>
                     <div class="offer_card">
                         <div class="offer_card_text">
