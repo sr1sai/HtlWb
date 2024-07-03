@@ -19,43 +19,178 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .main {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: rgb(240, 236, 229);
+        }
+        .section_navigation {
+            width: 5%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: auto;
+            background-color: rgb(34, 40, 49);
+        }
+        .section_slider {
+            height: 100%;
+            width: 95%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgb(36, 7, 80), rgb(52, 76, 100), rgb(87, 123, 141), rgb(87, 166, 161));
         }
         .title {
             font-family: 'Comfortaa', sans-serif;
-            font-size: 200%;
+            font-size: 400%;
             text-align: center;
             padding: 20px;
+            color: rgb(240, 236, 229);
         }
         .section {
             display: none;
-            height: 100%;
             padding: 20px;
             box-sizing: border-box;
-            background-color: white;
+            background-color: rgb(182, 187, 196);
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            animation-duration: 1s;
         }
         .section.active {
             display: block;
+            opacity: 1;
+        }
+        .section.fadeInUp {
+            animation-name: fadeInUp;
+        }
+        .section.fadeOutUp {
+            animation-name: fadeOutUp;
+        }
+        .section.fadeInDown {
+            animation-name: fadeInDown;
+        }
+        .section.fadeOutDown {
+            animation-name: fadeOutDown;
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeOutUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeOutDown {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
         }
         .quote {
             font-family: 'Comic Sans MS', sans-serif;
             font-size: 1.5em;
             margin-bottom: 20px;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        .section.active .quote {
+            transform: translateX(0);
+            opacity: 1;
         }
         .description {
             font-family: 'Copse', sans-serif;
             font-size: 1.2em;
             margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out 0.5s;
+        }
+        .section.active .description {
+            opacity: 1;
         }
         .image {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: lightgray;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out 0.5s;
+        }
+
+        .image_img {
+            background-color: #ddd;
             width: 100%;
             height: 200px;
-            background-color: lightgray;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease-in-out;
         }
+
+        .image_img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .section.active .image {
+            opacity: 1;
+        }
+
+        .image_img:hover {
+            transform: scale(1.05);
+        }
+
+        .section.active .image {
+            opacity: 1;
+        }
+        .arrow {
+            font-size: 2em;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid white;
+            background-color: rgb(34, 40, 49);
+        }
+        .arrow:hover {
+            color: rgb(0, 173, 181);
+            border: 1px solid rgb(0, 173, 181);
+        }
+        
     </style>
 </head>
 <body>
@@ -101,34 +236,60 @@
             <a href="./index.php"><div class="header_nav_bar_mobile_item">Log Out</div></a>
         </div>
         <div class="main">
-            <div class="section active"><div class="title">About Us</div></div>
-            <div class="section ">
-                <div class="quote">"A luxurious experience like no other"</div>
-                <div class="description">
-                    Welcome to Kaldan Samudhra Palace, where opulence meets tradition. Nestled along the serene coast of India, our hotel offers breathtaking views and world-class amenities.
+            <div class="section_slider">
+                <div class="section active fadeInUp" style="background-color: transparent;"><div class="title">About Us</div></div>
+                <div class="section">
+                    <div class="quote">"A luxurious experience like no other"</div>
+                    <div class="description">
+                        Welcome to Kaldan Samudhra Palace, where opulence meets tradition. Nestled along the serene coast of India, our hotel offers breathtaking views and world-class amenities.
+                    </div>
+                    <div class="image">
+                        <div class="image_img"><img src="image1.jpg" alt="Event Image 1"></div>
+                        <div class="image_img"><img src="image2.jpg" alt="Event Image 2"></div>
+                        <div class="image_img"><img src="image3.jpg" alt="Event Image 3"></div>
+                        <div class="image_img"><img src="image4.jpg" alt="Event Image 4"></div>
+                    </div>
                 </div>
-                <div class="image"></div>
+                <div class="section">
+                    <div class="quote">"Exquisite Dining"</div>
+                    <div class="description">
+                        Indulge in a culinary journey with our exquisite dining options. From traditional Indian cuisine to international delights, our restaurants cater to every palate.
+                    </div>
+                    <div class="image">
+                        <div class="image_img"><img src="image1.jpg" alt="Event Image 1"></div>
+                        <div class="image_img"><img src="image2.jpg" alt="Event Image 2"></div>
+                        <div class="image_img"><img src="image3.jpg" alt="Event Image 3"></div>
+                        <div class="image_img"><img src="image4.jpg" alt="Event Image 4"></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="quote">"Unmatched Hospitality"</div>
+                    <div class="description">
+                        At Kaldan Samudhra Palace, we pride ourselves on providing unmatched hospitality. Our dedicated staff ensures your stay is comfortable, memorable, and seamless.
+                    </div>
+                    <div class="image">
+                        <div class="image_img"><img src="image1.jpg" alt="Event Image 1"></div>
+                        <div class="image_img"><img src="image2.jpg" alt="Event Image 2"></div>
+                        <div class="image_img"><img src="image3.jpg" alt="Event Image 3"></div>
+                        <div class="image_img"><img src="image4.jpg" alt="Event Image 4"></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="quote">"Events and Celebrations"</div>
+                    <div class="description">
+                        Host your events and celebrations at our magnificent venues. Whether it's a wedding, conference, or a private party, we offer the perfect setting for every occasion.
+                    </div>
+                    <div class="image">
+                        <div class="image_img"><img src="image1.jpg" alt="Event Image 1"></div>
+                        <div class="image_img"><img src="image2.jpg" alt="Event Image 2"></div>
+                        <div class="image_img"><img src="image3.jpg" alt="Event Image 3"></div>
+                        <div class="image_img"><img src="image4.jpg" alt="Event Image 4"></div>
+                    </div>
+                </div>
             </div>
-            <div class="section">
-                <div class="quote">"Exquisite Dining"</div>
-                <div class="description">
-                    Indulge in a culinary journey with our exquisite dining options. From traditional Indian cuisine to international delights, our restaurants cater to every palate.
-                </div>
-                <div class="image"></div>
-            </div>
-            <div class="section">
-                <div class="quote">"Unmatched Hospitality"</div>
-                <div class="description">
-                    At Kaldan Samudhra Palace, we pride ourselves on providing unmatched hospitality. Our dedicated staff ensures your stay is comfortable, memorable, and seamless.
-                </div>
-                <div class="image"></div>
-            </div>
-            <div class="section">
-                <div class="quote">"Events and Celebrations"</div>
-                <div class="description">
-                    Host your events and celebrations at our magnificent venues. Whether it's a wedding, conference, or a private party, we offer the perfect setting for every occasion.
-                </div>
-                <div class="image"></div>
+            <div class="section_navigation">
+                <div class="arrow up">&uarr;</div>
+                <div class="arrow down">&darr;</div>
             </div>
         </div>
         <div class="footer">
@@ -149,20 +310,28 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const sections = document.querySelectorAll('.section');
+            const upArrow = document.querySelector('.arrow.up');
+            const downArrow = document.querySelector('.arrow.down');
             let currentIndex = 0;
             let timer;
 
-            function showSection(index) {
+            function showSection(index, direction) {
                 sections.forEach((section, idx) => {
-                    section.classList.toggle('active', idx === index);
+                    if (idx === index) {
+                        section.classList.add('active', direction === 'up' ? 'fadeInDown' : 'fadeInUp');
+                        section.classList.remove('fadeOutUp', 'fadeOutDown');
+                    } else {
+                        section.classList.remove('active', 'fadeInUp', 'fadeInDown');
+                        section.classList.add(direction === 'up' ? 'fadeOutUp' : 'fadeOutDown');
+                    }
                 });
             }
 
             function autoScroll() {
                 timer = setInterval(() => {
                     currentIndex = (currentIndex + 1) % sections.length;
-                    showSection(currentIndex);
-                }, 2000);
+                    showSection(currentIndex, 'down');
+                }, 3000);
             }
 
             function resetTimer() {
@@ -172,7 +341,19 @@
 
             document.addEventListener('mousemove', resetTimer);
 
-           // autoScroll();
+            upArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + sections.length) % sections.length;
+                showSection(currentIndex, 'up');
+                resetTimer();
+            });
+
+            downArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % sections.length;
+                showSection(currentIndex, 'down');
+                resetTimer();
+            });
+
+            autoScroll();
         });
     </script>
 </body>
