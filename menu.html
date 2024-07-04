@@ -464,9 +464,13 @@
           activeTab.style.opacity = "1";
           const items = activeTab.getElementsByClassName('tab_body_grp_item');
           for (let j = 0; j < items.length; j++) {
+            // Reset the visibility
+            items[j].classList.remove('visible');
+            items[j].style.opacity = '0';
+            items[j].style.transform = 'translateY(10px)';
             setTimeout(() => {
               items[j].classList.add('visible');
-            }, j * 200); // Delay of 0.1 seconds (100 milliseconds)
+            }, j * 100); // Delay of 0.1 seconds (100 milliseconds)
           }
         }, 10);
       }, 500);

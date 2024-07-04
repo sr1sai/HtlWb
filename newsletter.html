@@ -28,38 +28,50 @@
                 align-items: center;
                 justify-content: center;
             }
-            .tabs {
-                width: 40%;
+            .tabs { 
+                width: 100%;
+                max-width: 600px;
                 display: flex;
                 justify-content: space-around;
                 margin-bottom: 20px;
             }
             .tablink {
-                font-size: 120%;
-                font-family: 'Josefin Sans';
-                background-color: White;
-                border: none;
-                padding: 20px 40px;
+                font-size: 1.2em;
+                font-family: 'Josefin Sans', sans-serif;
+                background-color: white;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px 20px;
                 cursor: pointer;
-                transition: background-color 0.3s;
+                transition: background-color 0.3s, color 0.3s;
             }
             .tablink.active {
-                background-color: #ccc;
+                background-color: #00adb5;
+                color: white;
             }
             .tabcontent {
                 display: none;
-                width: 40%;
+                width: 100%;
+                max-width: 600px;
                 padding: 20px;
-                border-radius: 20px;
+                border-radius: 10px;
                 border: 1px solid #a0a0a0;
-                background-color: rgba(238, 238, 238,0.8);
+                background-color: rgba(238, 238, 238, 0.8);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: opacity 0.5s ease-in-out;
+            }
+            .tabcontent.active {
+                display: block;
+                opacity: 1;
             }
             .tabcontent form {
                 display: flex;
                 flex-direction: column;
+                align-items: center;
             }
             .tabcontent label {
                 margin-bottom: 10px;
+                font-weight: bold;
             }
             .tabcontent input {
                 margin-bottom: 20px;
@@ -67,31 +79,27 @@
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 400px;
+                font-size: 1em;
             }
-            .sub{
+            .sub, .unsub {
                 color: black;
                 cursor: pointer;
-                padding: 20px;
-                font-size: 110%;
+                padding: 10px 20px;
+                font-size: 1.1em;
                 border: 1px solid black;
+                border-radius: 5px;
                 background-color: transparent;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.3s ease, color 0.3s ease;
             }
             .sub:hover {
                 background-color: #218838;
-            }
-            .unsub{
-                color: black;
-                cursor: pointer;
-                padding: 20px;
-                font-size: 110%;
-                border: 1px solid black;
-                background-color: transparent;
-                transition: background-color 0.3s ease;
+                color: white;
             }
             .unsub:hover{
-                color: white;
                 background-color: rgb(255, 0, 0);
+                color: white;
             }
         </style>
     </head>
