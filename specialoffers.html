@@ -42,6 +42,8 @@
                 display: none;
             }
             .offer_card {
+                width: 350px;
+                height: 350px;
                 border: 1px solid #ddd;
                 border-radius: 8px;
                 overflow: hidden;
@@ -53,7 +55,7 @@
                 justify-content: center;
             }
             .offer_card:hover {
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 4px 20px rgba(0, 173, 181, 0.8);
                 transform: translateY(-10px);
             }
             .offer_card_img {
@@ -79,6 +81,12 @@
                 width: 200px;
                 height:150px;
                 background-color: aquamarine;
+            }
+            @media (max-width: 768px){
+                .offer_card {
+                    width: 100%;
+                    height: 300px;
+                }
             }
         </style>
     </head>
