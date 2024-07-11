@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="./global.css">
+  <script src="./global.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic Sans MS:wght@400&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Copse:wght@400&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Delius Unicase:wght@700&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dhyana:wght@700&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=David Libre:wght@400&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Droid Sans:wght@400&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inria Sans:wght@700&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM Sans:wght@700&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .form {
+      padding: 20px;
+      width: 90%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      background-color: rgba(238, 238, 238, 0.9);
+      color: #222;
+      font-size: 1em;
+      overflow: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      
+    }
+    #rating_form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      width: 90%;
+    }
+    .form .field label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    .form .field input,
+    .form .field textarea,
+    .form .field button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .form .field input[type="submit"],
+    .form .add-to-cart {
+      background-color: #00adb5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+    .form .field input[type="submit"]:hover,
+    .form .add-to-cart:hover {
+      background-color: #218838;
+    }
+    .rating {
+      direction: rtl;
+      unicode-bidi: bidi-override;
+    }
+    .rating > input {
+      display: none;
+    }
+    .rating > label {
+      display: inline-block;
+      position: relative;
+      width: 1.1em;
+      font-size: 2rem;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .rating > label:hover,
+    .rating > label:hover ~ label,
+    .rating > input:checked ~ label {
+      color: #ffc700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+        <div class="header_logo">
+            <div class="header_logo_square">
+              <a href="./home.html"><img src="https://www.kaldanhotels.com/images/logo.png" alt="logo" style="width:140px;height:80px;"></a>
+            </div>
+        </div>
+        <div class="header_nav_bar">
+            <div class="header_nav_bar_item active">
+            <a href="./menu.html"><div class="header_nav_bar_item_text"><p>Menu</p></div></a>
+            </div>
+            <div class="header_nav_bar_item">
+                <a href="./order.html"><div class="header_nav_bar_item_text"><p>Order</p></div></a>
+            </div>
+            <div class="header_nav_bar_item">
+                <a href="./specialoffers.html"><div class="header_nav_bar_item_text"><p>Special Offers</p></div></a>
+            </div>
+            <div class="header_nav_bar_item">
+                <a href="./newsletter.html"><div class="header_nav_bar_item_text"><p>News Letter</p></div></a>
+            </div>
+            <div class="header_nav_bar_item">
+                <a href="./about.html"><div class="header_nav_bar_item_text"><p>About</p></div></a>
+            </div>
+            <div class="header_nav_bar_item">
+                <a href="./index.html"><div class="header_nav_bar_item_text"><p>Log Out</p></div></a>
+            </div>
+        </div>
+        <div class="header_hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+    </div>
+    <div class="header_nav_bar_mobile" id="mobileMenu">
+      <a href="./menu.html"><div class="header_nav_bar_mobile_item">Menu</div></a>
+      <a href="./order.html"><div class="header_nav_bar_mobile_item">Order</div></a>
+      <a href="./sploff.php"><div class="header_nav_bar_mobile_item">Special Offers</div></a>
+      <a href="./newsletter.html"><div class="header_nav_bar_mobile_item">Contact</div></a>
+      <a href="./about.html"><div class="header_nav_bar_mobile_item">About</div></a>
+      <a href="./index.html"><div class="header_nav_bar_mobile_item">Log Out</div></a>
+    </div>
+    <div class="main">
+      <div class="form">
+        <form id="rating_form">
+          <div class="field">
+            <label for="feedback">Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="4" required></textarea>
+          </div>
+          <div class="field">
+            <label for="rating">Rating:</label>
+            <div class="rating">
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5" title="5 stars">★</label>
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4" title="4 stars">★</label>
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3" title="3 stars">★</label>
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2" title="2 stars">★</label>
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1" title="1 star">★</label>
+            </div>
+          </div>
+          <div class="field">
+            <input type="submit" value="Submit Feedback">
+          </div>
+        </form>
+      </div>
+      <div class="video_background">
+        <video id="video-background" autoplay loop muted>
+          <source src="./vid_1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer_item">
+        <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
+      </div>
+      <div class="footer_item">
+        <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
+      </div>
+      <div class="footer_item">
+        <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./img/gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
+      </div>
+      <div class="footer_item">
+        <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const hamburger = document.querySelector('.header_hamburger');
+      const navBarMobile = document.querySelector('.header_nav_bar_mobile');
+
+      hamburger.addEventListener('click', function() {
+          navBarMobile.style.display = navBarMobile.style.display === 'none' ? 'flex' : 'none';
+      });
+
+      const ratingForm = document.getElementById('rating_form');
+      ratingForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const userName = document.getElementById('userName').value;
+        const userEmail = document.getElementById('userEmail').value;
+        const feedback = document.getElementById('feedback').value;
+        const rating = document.querySelector('input[name="rating"]:checked').value;
+
+        console.log(`Name: ${userName}`);
+        console.log(`Email: ${userEmail}`);
+        console.log(`Feedback: ${feedback}`);
+        console.log(`Rating: ${rating}`);
+
+        alert('Feedback submitted successfully!');
+
+        ratingForm.reset();
+      });
+    });
+  </script>
+</body>
+</html>
