@@ -185,6 +185,12 @@ a{
   height: 200px;
   background-color: white;
 }
+.frame_img_item{
+  img{
+    height: 200px;
+    width: 500px;
+  }
+}
 .event {
   height: 100%;
   width: 100%;
@@ -198,6 +204,7 @@ a{
   font-family: David Libre;
   font-size: 1.2em;
   font-weight: bold;
+  text-wrap: wrap;
 }
 .event_body {
   width: 100%;
@@ -210,7 +217,7 @@ a{
   width: 60%;
   height: max-content;
   font-family: Droid Sans;
-  text-wrap: w;
+  text-wrap: wrap;
   margin-left: 5px;
   margin-bottom: 5px;
   font-size: 1em;
@@ -221,6 +228,12 @@ a{
   background-color: red;
   width: 30%;
   height: 100px;
+}
+.event_body_img{
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
 .review {
   width: 100%;
@@ -234,8 +247,13 @@ a{
 .review_profile_img {
   width: 50px;
   height: 50px;
-  background-color: #ccc;
   margin-right: 10px;
+}
+.review_profile_img{
+  img{
+    width: 50px;
+    height: 50px;
+  }
 }
 .review_profile_name {
   font-size: 1.2em;
