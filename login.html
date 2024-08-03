@@ -118,6 +118,61 @@
             contents[index].classList.add('active');
           });
         });
+
+        // Handle Sign-Up Form Submission
+        document.querySelector('.tab-content:nth-child(2) form').addEventListener('submit', async (event) => {
+          event.preventDefault();
+          
+          const data = {
+            fullName: document.getElementById('signup-name').value,
+            phone: document.getElementById('signup-phone').value,
+            email: document.getElementById('signup-email').value,
+            username: document.getElementById('signup-username').value,
+            password: document.getElementById('signup-password').value,
+          };
+          
+          try {
+            const response = await fetch('/signup', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+            const result = await response.text();
+            alert(result);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        });
+
+        // Handle Sign-In Form Submission
+        document.querySelector('.tab-content:nth-child(1) form').addEventListener('submit', async (event) => {
+          event.preventDefault();
+          
+          const data = {
+            username: document.getElementById('signin-username').value,
+            password: document.getElementById('signin-password').value,
+          };
+
+          try {
+            const response = await fetch('/signin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            if (response.ok) {
+              alert('Sign-In Successful');
+            } else {
+              alert(result);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        });
       });
     </script>
   </head>
