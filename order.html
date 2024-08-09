@@ -118,6 +118,30 @@
         }
       }
     </style>
+    <script>
+      function getDetails(){
+        var name="";
+        var mobile="";
+
+        const username=sessionStorage.getAttribute('username');
+        if (username!=null){
+          fetch('http://localhost:3000/order_details', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(username)
+        })
+        .then(response=>response.json())
+        .then(data=>{
+            name=data.name;
+            mobile=data.mobile;
+        });
+          document.getElementById('name').value=name;
+          document.getElementById('mobile').value=mobile;
+        }
+      }
+    </script>
   </head>
   <body>
     <div class="container">

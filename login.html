@@ -85,7 +85,7 @@
         color: #222831;
       }
 
-      button {
+      input[type=submit] {
         width: 100%;
         padding: 15px;
         outline: 1px solid #222831;
@@ -98,7 +98,7 @@
         transition: background 0.3s, color 0.3s;
       }
 
-      button:hover {
+      input[type=submit]:hover {
         outline: 1px solid #EEEEEE;
         color: #EEEEEE;
         background-color: #222831;
@@ -119,61 +119,67 @@
           });
         });
 
-        // Handle Sign-Up Form Submission
-        document.querySelector('.tab-content:nth-child(2) form').addEventListener('submit', async (event) => {
-          event.preventDefault();
-          
-          const data = {
-            fullName: document.getElementById('signup-name').value,
-            phone: document.getElementById('signup-phone').value,
-            email: document.getElementById('signup-email').value,
-            username: document.getElementById('signup-username').value,
-            password: document.getElementById('signup-password').value,
-          };
-          
-          try {
-            const response = await fetch('/signup', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            });
-            const result = await response.text();
-            alert(result);
-          } catch (error) {
-            console.error('Error:', error);
-          }
-        });
-
-        // Handle Sign-In Form Submission
-        document.querySelector('.tab-content:nth-child(1) form').addEventListener('submit', async (event) => {
-          event.preventDefault();
-          
-          const data = {
-            username: document.getElementById('signin-username').value,
-            password: document.getElementById('signin-password').value,
-          };
-
-          try {
-            const response = await fetch('/signin', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            });
-            const result = await response.json();
-            if (response.ok) {
-              alert('Sign-In Successful');
-            } else {
-              alert(result);
-            }
-          } catch (error) {
-            console.error('Error:', error);
-          }
-        });
+        //signup
+        var user='not init';
       });
+
+      //sign up
+      function reqSignup(){
+        user={'full_name': document.getElementById('signup-name').value,
+                  'username': document.getElementById('signup-username').value,
+                  'phone': document.getElementById('signup-phone').value,
+                  'email': document.getElementById('signup-email').value,
+                  'password': document.getElementById('signup-password').value
+        }
+        fetch('http://localhost:3000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert(JSON.stringify(data.message));  // Alert the message received from server
+            if (data.message === 'Signup successful') {
+                location.href =location.href.replace('login.html','login.html');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      }
+
+      //sign in res
+      function reqSignIn(){
+        user={
+              'username': document.getElementById('signin-username').value,
+              'password': document.getElementById('signin-password').value
+        }
+        fetch('http://localhost:3000/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert(JSON.stringify(data.message));  // Alert the message received from server
+            if (data.message === 'Signin successful') {
+              //store the username in session?
+              sessionStorage.set('username',document.getElementById('signin-username').value);
+              location.href =location.href.replace('login.html','index.html');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      }
+
+
     </script>
   </head>
   <body>
@@ -204,7 +210,7 @@
                   <label for="signin-password">Password</label>
                   <input type="password" id="signin-password" required>
                 </div>
-                <button type="submit">Sign In</button>
+                <input type="submit" id="signin_btn" value='Sign In' onclick="reqSignIn(); return false;">
               </form>
             </div>
             <div class="tab-content">
@@ -229,7 +235,7 @@
                   <label for="signup-password">Password</label>
                   <input type="password" id="signup-password" required>
                 </div>
-                <button type="submit">Sign Up</button>
+                <input type="submit" id="signup_btn" value="Sign Up" onclick="reqSignup(); return false;">
               </form>
             </div>
           </div>
