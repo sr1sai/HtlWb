@@ -157,6 +157,7 @@
               'username': document.getElementById('signin-username').value,
               'password': document.getElementById('signin-password').value
         }
+        alert("calling fetch");
         fetch('http://localhost:3000/signin', {
             method: 'POST',
             headers: {
@@ -169,14 +170,15 @@
             console.log('Success:', data);
             alert(JSON.stringify(data.message));  // Alert the message received from server
             if (data.message === 'Signin successful') {
-              //store the username in session?
-              sessionStorage.set('username',document.getElementById('signin-username').value);
+              sessionStorage.setItem('username', document.getElementById('signin-username').value);
+              alert(sessionStorage.getItem('username'));
               location.href =location.href.replace('login.html','index.html');
             }
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+        alert("fetch ended");
       }
 
 

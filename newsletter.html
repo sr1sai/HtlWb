@@ -102,6 +102,25 @@
                 color: white;
             }
         </style>
+        <script>
+            function reqSub(){
+                fetch("http://localhost:3000/newsletter_sub",{
+                    method:post,
+                    headers:{
+                        "Content-Type": "application/json"   
+                    },
+                    body:JSON.stringify({"mail":document.getElementById("sub_email").value})
+                })
+                .then(response=>response.JSON())
+                .then(data=>{
+                    alert(JSON.stringify(data.message));
+                })
+            }
+
+            function reUnSub(){
+
+            }
+        </script>
     </head>
     <body>
         <div class="container">
@@ -155,7 +174,7 @@
                     <h2>Subscribe to our Newsletter</h2>
                     <label for="sub_email">Email:</label>
                     <input type="email" id="sub_email" name="sub_email" required>
-                    <button type="submit" class="sub">Subscribe</button>
+                    <button type="submit" class="sub" onclick="reqSub()">Subscribe</button>
                 </form>
             </div>
             <div id="unsub_form" class="tabcontent" style="display:none">

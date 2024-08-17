@@ -70,7 +70,18 @@
         background-color: transparent;
         transition: background-color 0.3s ease;
       }
-      .orderForm_item button:hover {
+      .orderForm_item button:hover{
+        color: white;
+        background-color: rgb(0, 173, 181);
+      }
+      .orderForm_item input[type=submit]  {
+        color: black;
+        cursor: pointer;
+        border: 1px solid black;
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+      }
+      .orderForm_item input[type=submit]:hover{
         color: white;
         background-color: rgb(0, 173, 181);
       }
@@ -119,28 +130,81 @@
       }
     </style>
     <script>
-      function getDetails(){
-        var name="";
-        var mobile="";
+      function getDetails() {
+          const username = sessionStorage.getItem('username');
 
-        const username=sessionStorage.getAttribute('username');
-        if (username!=null){
-          fetch('http://localhost:3000/order_details', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(username)
-        })
-        .then(response=>response.json())
-        .then(data=>{
-            name=data.name;
-            mobile=data.mobile;
-        });
-          document.getElementById('name').value=name;
-          document.getElementById('mobile').value=mobile;
-        }
+          if (username != null) {
+              fetch('http://localhost:3000/order_details', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ username: username }) // Sending the username as an object
+              })
+              .then(response => response.json())
+              .then(data => {
+                  // Populate the form fields after data is retrieved
+                  document.getElementById('name').value = data.name || '';
+                  document.getElementById('mobile').value = data.mobile || '';
+              })
+              .catch(error => console.error('Error fetching order details:', error));
+          }
       }
+      function reqOrder() {
+          const name = document.getElementById('name').value;
+          const mobile = document.getElementById('mobile').value;
+          const orderType = document.getElementById('orderType').value;
+          const address = orderType === 'homedelivery' ? document.getElementById('address').value : ''; // Only include address if order type is home delivery
+          const items = [];
+          const selectedItemsDiv = document.getElementById('selectedItems');
+          const itemRows = selectedItemsDiv.getElementsByClassName('item-row');
+          
+          for (let i = 0; i < itemRows.length; i++) {
+              const itemText = itemRows[i].children[0].innerText;
+              const [itemName,itemDetails, itemTotal] = itemText.split(' - ₹');
+              const [itemPrice,itemQuantity] = itemDetails.split(' x ');
+              items.push({
+                  name: itemName,
+                  quantity: parseInt(itemQuantity),
+                  price_each: parseInt(itemPrice),
+                  price_total:parseInt(itemTotal)
+              });
+          }
+          
+          const total = document.getElementById('totalPrice').innerText;
+
+          const order = {
+              name: name,
+              mobile: mobile,
+              orderType: orderType,
+              address: address,
+              items: items,
+              total: parseFloat(total)
+          };
+
+          // Send the order to the server
+          fetch('http://localhost:3000/place_order', { // Update URL as necessary
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(order)
+          })
+          .then(response => response.json())
+          .then(data => {
+              alert(data.message); // Display any message returned from the server
+              // Optionally, you can reset the form or redirect the user
+              document.getElementById('orderForm').reset();
+              document.getElementById('selectedItems').innerHTML = ''; // Clear the selected items
+              document.getElementById('totalPrice').innerText = '0'; // Reset total price
+          })
+          .catch(error => console.error('Error submitting order:', error));
+          alert(JSON.stringify(order));
+          
+      }
+
+
+      window.onload = getDetails;
     </script>
   </head>
   <body>
@@ -255,7 +319,7 @@
                 <p>Total: ₹<span id="totalPrice">0</span></p>
               </div>
               <div class="orderForm_item">
-                <button type="submit">Submit Order</button>
+                <input type="submit" value="Submit Order" onclick="reqOrder()">
               </div>
             </div>
           </form>

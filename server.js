@@ -13,9 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Request logging middleware
 app.use((req, res, next) => {
-    console.log(`Received ${req.method} request for '${req.url}'`);
+    console.log(`Test: Received ${req.method} request for '${req.url}'`);
     if (req.method === 'POST' || req.method === 'PUT' || req.method === 'OPTIONS') {
-        console.log('Request Body:', req.body);
+        console.log('Test: Request Body:', req.body);
     }
     next();
 });
@@ -35,6 +35,24 @@ const userSchema = new mongoose.Schema({
   password: String
 });
 const User = mongoose.model('User', userSchema);
+
+const orderSchema = new mongoose.Schema({
+  name: String,
+  mobile: String,
+  orderType: String,
+  address: String,
+  total: String
+});
+const Order = mongoose.model('Order', orderSchema);
+
+const itemSchema = new mongoose.Schema({
+  order_id: mongoose.Schema.Types.ObjectId,
+  name: String,
+  quantity: Number,
+  price_each: String,
+  price_total: String
+});
+const Item = mongoose.model('Item', itemSchema);
 
 // Signup route
 app.post('/signup', async (req, res) => {
@@ -74,7 +92,6 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-
 app.post('/signin',async(req,res)=>{
   console.log('Received POST request for /signin ._.');
   console.log('Request Body:', req.body);
@@ -102,26 +119,68 @@ app.post('/signin',async(req,res)=>{
   }
 });
 
-app.post('/order_details',async(req,res)=>{
-  console.log('Received POST request for /order ._.');
-  console.log('Request Body',req.body);
-  try{
-    const existingUser = await User.findOne({ username:req.body.username });
+app.post('/order_details', async (req, res) => {
+  try {
+    const existingUser = await User.findOne({ username: req.body.username });
     if (!existingUser) {
-      console.log('Username Does not exist');
+      console.log('Username Does Not Exist');
       return res.status(400).json({ message: 'Username Does Not Exist' });
-    }
-    else{
+    } else {
       res.json({
-        'name':existingUser.full_name,
-        'mobile':existingUser.phone
-      })
+        'name': existingUser.full_name,
+        'mobile': existingUser.phone
+      });
     }
-   } catch (error) {
-  console.error('Error during signup:', error);
-  res.status(500).json({ message: 'Internal server error' });
-}
-})
+  } catch (error) {
+    console.error('Error during order details fetch:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.post('/place_order',async(req,res)=>{
+  console.log('Received POST request for /place_order ._.');
+  console.log('Request Body:', req.body);
+  
+  const { name, mobile, orderType, address, items, total } = req.body;
+
+  try {
+    const newOrder = new Order({
+      name,
+      mobile,
+      orderType,
+      address,
+      total
+    });
+
+    await newOrder.save();
+
+    items.forEach(async (item) => {
+      const newItem = new Item({
+          order_id: newOrder._id,
+          name: item.name,
+          quantity: item.quantity,
+          price_each: item.price_each,
+          price_total: item.price_total
+      });
+      await newItem.save();
+  });
+
+
+    console.log('Order placed:', newOrder);
+
+    res.json({ message: 'Order placed successfully', order: newOrder });
+  } catch (error) {
+    console.error('Error placing order:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+});
+
+app.post("/newsletter_sub",async(req,res)=>{
+  console.log('Received POST request for /newsletter_sub.');
+  console.log('Request Body:', req.body);
+
+});
 
 // Start the server
 app.listen(port, () => {
