@@ -105,6 +105,7 @@
       }
     </style>
     <script>
+      const ip='192.168.236.126';
       document.addEventListener('DOMContentLoaded', function() {
         const tabs = document.querySelectorAll('.tab');
         const contents = document.querySelectorAll('.tab-content');
@@ -131,7 +132,7 @@
                   'email': document.getElementById('signup-email').value,
                   'password': document.getElementById('signup-password').value
         }
-        fetch('http://localhost:3000/signup', {
+        fetch('http://'+ip+':3000/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -157,8 +158,7 @@
               'username': document.getElementById('signin-username').value,
               'password': document.getElementById('signin-password').value
         }
-        alert("calling fetch");
-        fetch('http://localhost:3000/signin', {
+        fetch('http://'+ip+':3000/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -168,7 +168,7 @@
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            alert(JSON.stringify(data.message));  // Alert the message received from server
+            alert(JSON.stringify(data.message));
             if (data.message === 'Signin successful') {
               sessionStorage.setItem('username', document.getElementById('signin-username').value);
               alert(sessionStorage.getItem('username'));
@@ -178,7 +178,6 @@
         .catch((error) => {
             console.error('Error:', error);
         });
-        alert("fetch ended");
       }
 
 

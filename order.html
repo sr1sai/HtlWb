@@ -130,11 +130,12 @@
       }
     </style>
     <script>
+      const ip='192.168.236.126';
       function getDetails() {
           const username = sessionStorage.getItem('username');
 
           if (username != null) {
-              fetch('http://localhost:3000/order_details', {
+              fetch('http://'+ip+':3000/order_details', {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json'
@@ -183,7 +184,7 @@
           };
 
           // Send the order to the server
-          fetch('http://localhost:3000/place_order', { // Update URL as necessary
+          fetch('http://'+ip+':3000/place_order', { // Update URL as necessary
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -319,7 +320,7 @@
                 <p>Total: ₹<span id="totalPrice">0</span></p>
               </div>
               <div class="orderForm_item">
-                <input type="submit" value="Submit Order" onclick="reqOrder()">
+                <input type="submit" value="Submit Order" onclick="reqOrder(); return false;">
               </div>
             </div>
           </form>

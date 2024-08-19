@@ -11,6 +11,12 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// MongoDB connection
+const uri = 'mongodb+srv://srisaidivyakola:D%4030012003@cluster0.hesyche.mongodb.net/HotelWeb?retryWrites=true&w=majority&appName=Cluster0';
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log('MongoDB connection error:', err));
+
 // Request logging middleware
 app.use((req, res, next) => {
     console.log(`Test: Received ${req.method} request for '${req.url}'`);
@@ -19,12 +25,6 @@ app.use((req, res, next) => {
     }
     next();
 });
-
-// MongoDB connection
-const uri = 'mongodb+srv://srisaidivyakola:D%4030012003@cluster0.hesyche.mongodb.net/HotelWeb?retryWrites=true&w=majority&appName=Cluster0';
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log('MongoDB connection error:', err));
 
 // Define a schema and model for the user
 const userSchema = new mongoose.Schema({
@@ -53,6 +53,11 @@ const itemSchema = new mongoose.Schema({
   price_total: String
 });
 const Item = mongoose.model('Item', itemSchema);
+
+const newsletterSchema = new mongoose.Schema({
+  email: String
+});
+const newsletter= mongoose.model("newsletter",newsletterSchema);
 
 // Signup route
 app.post('/signup', async (req, res) => {
@@ -176,11 +181,59 @@ app.post('/place_order',async(req,res)=>{
 
 });
 
-app.post("/newsletter_sub",async(req,res)=>{
+app.post("/newsletter_sub", async (req, res) => {
   console.log('Received POST request for /newsletter_sub.');
   console.log('Request Body:', req.body);
+  
+  const username = req.body.username;
+  
+  try {
+    const user = await User.findOne({ username: username });
+    const existingSubscriber = await newsletter.findOne({ email: user.email });
+    
+    if (existingSubscriber) {
+      console.log('Email already subscribed:', email);
+      res.json({ message: 'Already subscribed' });
+    }
+    else{
+      const newLtr = new newsletter({
+        email:user.email
+      });
+      await newLtr.save();
+      res.json({ message: 'Subscription successful' });
+    }
 
+  } catch (error) {
+    console.error('Error saving newsletter subscription:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
+
+
+app.post("/newsletter_unsub", async (req, res) => {
+  console.log('Received POST request for /newsletter_unsub.');
+  console.log('Request Body:', req.body);
+  const username = req.body.username;
+
+  try {
+    const user = await User.findOne({ username: username });
+    const result = await newsletter.deleteOne({ email: user.email });
+
+    if (result.deletedCount > 0) {
+      console.log('Unsubscription successful:', user.email);
+      res.status(200).json({ message: 'Unsubscription successful' });
+    } else {
+      console.log('Email not found:', user.email);
+      res.status(404).json({ message: 'Not Subscribed' });
+    }
+
+  } catch (err) {
+    console.error('Error during unsubscription:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 // Start the server
 app.listen(port, () => {
