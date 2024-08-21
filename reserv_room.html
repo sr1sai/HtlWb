@@ -26,14 +26,18 @@
             background-color: rgba(238, 238, 238, 0.9);
             color: #222;
             font-size: 1em;
-            overflow: auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
         }
         .form::-webkit-scrollbar {
             display: none;
+        }
+        form{
+            width: 100%;
+            overflow: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
         }
         .form .field {
             display: flex;
@@ -148,11 +152,71 @@
             font-weight: bold;
         }
         @media (max-width: 768px) {
-            .form {
+            .form{
+                width: 90%;
+                height: 90%;
+                overflow: auto;
+            }
+            form {
                 grid-template-columns: 1fr;
+                
+            overflow: auto;
             }
         }
     </style>
+    <script>
+        function reqRoom() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            const cartItems = [];
+            const cartItemElements = document.querySelectorAll('.cart-item');
+
+            cartItemElements.forEach(item => {
+                const roomType = item.querySelector('#span_item_room_type').innerText;
+                const roomCost = item.querySelector('#span_item_room_cost').innerText.replace('₹', '');
+                const checkin = item.querySelector('#span_item_room_chkin').innerText;
+                const checkout = item.querySelector('#span_item_room_chkout').innerText;
+                const numPeople=item.querySelector('#span_item_room_ppl').innerText;
+                cartItems.push({ roomType, roomCost, checkin, checkout,numPeople });
+            });
+
+            if (!cartItems.length) {
+                alert('Please add at least one room to your cart before reserving.');
+                return;
+            }
+
+            const data = {
+                fullName,
+                email,
+                phone,
+                cartItems
+            };
+
+            fetch('http://localhost:3000/reserve_room', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data);
+                if(data.message=="Reservation Has Been Made"){
+                    document.getElementById("reserv_room").reset();
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert("There was an error with your reservation. Please try again.");
+            });
+        }
+
+
+
+    </script>
 </head>
 <body>
     <div class="container">
@@ -198,69 +262,69 @@
         </div>
         <div class="main">
             <div class="form">
-                <div class="column">
-                    <form id="reserv_room">
+                <form id="reserv_room">
+                    <div class="column">
+                            <div class="field">
+                                <label for="fullName">Full Name:</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+                            <div class="field">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="field">
+                                <label for="phone">Phone Number:</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="field">
+                                <label for="numPeople">Number of People:</label>
+                                <input type="number" id="numPeople" name="numPeople" min="1" max="10" required>
+                            </div>
+                    </div>
+                    <div class="column">
                         <div class="field">
-                            <label for="fullName">Full Name:</label>
-                            <input type="text" id="fullName" name="fullName" required>
+                            <label for="roomType">Room Type:</label>
+                            <select id="roomType" name="roomType" onchange="updatePreview()">
+                                <option value="" data-imgs="" data-price="" data-max="">--Select Room Type--</option>
+                                <option value="single" data-imgs="img/single1.jpg,img/single2.jpg,img/single3.jpeg" data-price="2000" data-max="1">Single - ₹2000/night</option>
+                                <option value="double" data-imgs="img/double1.jpg,img/double2.jpg" data-price="3500" data-max="2">Double - ₹3500/night</option>
+                                <option value="suite" data-imgs="img/suite1.jpg,img/suite2.jpeg" data-price="5000" data-max="4">Suite - ₹5000/night</option>
+                            </select>
                         </div>
                         <div class="field">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
+                            <label for="checkIn">Check-In Date:</label>
+                            <input type="date" id="checkIn" name="checkIn" required>
                         </div>
                         <div class="field">
-                            <label for="phone">Phone Number:</label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <label for="checkOut">Check-Out Date:</label>
+                            <input type="date" id="checkOut" name="checkOut" required>
+                        </div>
+                        <div class="preview" id="roomPreview">
+                            <p>Room preview will be shown here</p>
+                            <div class="nav">
+                                <span onclick="prevSlide()">&#10094;</span>
+                                <span onclick="nextSlide()">&#10095;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <button type="button" class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+                        </div>
+                        <div class="cart" id="cart">
+                            <h3>Cart</h3>
+                            <div id="cartItems">
+                                <p>No items in cart</p>
+                            </div>
+                        </div>
+                        <div class="total-price" id="totalPrice">
+                            Total: ₹0
                         </div>
                         <div class="field">
-                            <label for="numPeople">Number of People:</label>
-                            <input type="number" id="numPeople" name="numPeople" min="1" max="10" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="column">
-                    <div class="field">
-                        <label for="roomType">Room Type:</label>
-                        <select id="roomType" name="roomType" onchange="updatePreview()">
-                            <option value="" data-imgs="" data-price="" data-max="">--Select Room Type--</option>
-                            <option value="single" data-imgs="img/single1.jpg,img/single2.jpg,img/single3.jpeg" data-price="2000" data-max="1">Single - ₹2000/night</option>
-                            <option value="double" data-imgs="img/double1.jpg,img/double2.jpg" data-price="3500" data-max="2">Double - ₹3500/night</option>
-                            <option value="suite" data-imgs="img/suite1.jpg,img/suite2.jpeg" data-price="5000" data-max="4">Suite - ₹5000/night</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="checkIn">Check-In Date:</label>
-                        <input type="date" id="checkIn" name="checkIn" required>
-                    </div>
-                    <div class="field">
-                        <label for="checkOut">Check-Out Date:</label>
-                        <input type="date" id="checkOut" name="checkOut" required>
-                    </div>
-                    <div class="preview" id="roomPreview">
-                        <p>Room preview will be shown here</p>
-                        <div class="nav">
-                            <span onclick="prevSlide()">&#10094;</span>
-                            <span onclick="nextSlide()">&#10095;</span>
+                            <input type="submit" value="Reserve Now" form="reserv_room" onclick="reqRoom(); return false;">
                         </div>
                     </div>
-                </div>
-                <div class="column">
-                    <div class="field">
-                        <button type="button" class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                    <div class="cart" id="cart">
-                        <h3>Cart</h3>
-                        <div id="cartItems">
-                            <p>No items in cart</p>
-                        </div>
-                    </div>
-                    <div class="total-price" id="totalPrice">
-                        Total: ₹0
-                    </div>
-                    <div class="field">
-                        <input type="submit" value="Reserve Now" form="reserv_room">
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="video_background">
                 <video id="video-background" autoplay loop muted>
@@ -345,36 +409,54 @@
         const checkInDate = new Date(document.getElementById('checkIn').value);
         const checkOutDate = new Date(document.getElementById('checkOut').value);
         const cartItemsDiv = document.getElementById('cartItems');
+        const numPeopleInput = document.getElementById('numPeople').value;
 
-        if (roomType) {
+        if (roomType && checkInDate && checkOutDate) {
             const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
             const totalCost = roomPrice * days;
             totalPrice += totalCost;
+
             const cartItemDiv = document.createElement('div');
             cartItemDiv.classList.add('cart-item');
+
             cartItemDiv.innerHTML = `
-                <span>${roomTypeName}</span>
-                <span>₹${totalCost}</span>
-                <span class="remove" onclick="removeFromCart(this, ${totalCost})">Remove</span>
+                <div>
+                    <span id='span_item_room_type'>${roomTypeName}</span>
+                    <span id='span_item_room_cost'>₹${totalCost}</span>
+                    <span class="remove" onclick="removeFromCart(this, ${totalCost})">Remove</span>
+                </div>
+                <div>
+                    <span id='span_item_room_chkin'>${checkInDate.toDateString()}</span> - <span id='span_item_room_chkout'>${checkOutDate.toDateString()}</span>
+                </div>
+                <div>
+                    <span id='span_item_room_ppl'>${numPeopleInput}</span>
+                </div>
             `;
+
             cartItemsDiv.appendChild(cartItemDiv);
+
             if (cartItemsDiv.querySelector('p')) {
                 cartItemsDiv.querySelector('p').remove();
             }
+
             updateTotalPrice();
         } else {
-            alert('Please select a room type');
+            alert('Please select a room type, check-in date, and check-out date.');
         }
     }
 
     function removeFromCart(element, cost) {
         totalPrice -= cost;
-        const cartItemDiv = element.parentElement;
+        
+        // Select the parent of the element's parent to remove both divs
+        const cartItemDiv = element.closest('.cart-item');
         cartItemDiv.remove();
+
         const cartItemsDiv = document.getElementById('cartItems');
         if (cartItemsDiv.children.length === 0) {
             cartItemsDiv.innerHTML = '<p>No items in cart</p>';
         }
+
         updateTotalPrice();
     }
 
@@ -382,5 +464,6 @@
         const totalPriceDiv = document.getElementById('totalPrice');
         totalPriceDiv.innerText = `Total: ₹${totalPrice}`;
     }
+
 </script>
 </html>

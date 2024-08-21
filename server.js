@@ -59,7 +59,45 @@ const newsletterSchema = new mongoose.Schema({
 });
 const newsletter= mongoose.model("newsletter",newsletterSchema);
 
-// Signup route
+const reservationRoom=mongoose.Schema({
+  full_name:String,
+  email:String,
+  phone:String,
+  total:Number
+});
+const Reservation_Room= mongoose.model("Reservation_Room",reservationRoom);
+
+const single_rooms=mongoose.Schema({
+  reservation_id:mongoose.Schema.Types.ObjectId,
+  people:Number,
+  check_in_date:Date,
+  check_out_date:Date,
+  price_per:Number,
+  price_total:Number
+});
+const Single_Rooms = mongoose.model("Single_Rooms",single_rooms);
+
+const double_rooms=mongoose.Schema({
+  reservation_id:mongoose.Schema.Types.ObjectId,
+  people:Number,
+  check_in_date:Date,
+  check_out_date:Date,
+  price_per:Number,
+  price_total:Number
+});
+const Double_Rooms = mongoose.model("Double_Rooms",double_rooms);
+
+const suite_rooms=mongoose.Schema({
+  reservation_id:mongoose.Schema.Types.ObjectId,
+  people:Number,
+  check_in_date:Date,
+  check_out_date:Date,
+  price_per:Number,
+  price_total:Number
+});
+const Suite_Rooms = mongoose.model("Suite_Rooms",suite_rooms);
+
+// Route
 app.post('/signup', async (req, res) => {
   console.log('Received POST request for /signup ._.');
   console.log('Request Body:', req.body);
@@ -209,7 +247,6 @@ app.post("/newsletter_sub", async (req, res) => {
   }
 });
 
-
 app.post("/newsletter_unsub", async (req, res) => {
   console.log('Received POST request for /newsletter_unsub.');
   console.log('Request Body:', req.body);
@@ -233,6 +270,32 @@ app.post("/newsletter_unsub", async (req, res) => {
   }
 });
 
+app.post("/reserve_room",async(req,res)=>{
+  console.log('Received POST request for /reserve_room.');
+  console.log('Request Body:', req.body);
+
+  const name=req.body.fullName;
+  const email=req.body.email;
+  const phone=req.body.phone;
+  let total=0;
+  req.body.cartItems.forEach(room=>{
+    total+=room.roomCost;
+  });
+  const newRes = new Reservation_Room({
+    full_name:name,
+    email,
+    phone,
+    total
+  });
+  try {
+    await newRes.save();
+    res.json({message:"Reservation Has Been Made"});
+  } catch(err){
+    console.log(err);
+    res.status(500).json("Internal Server Error");
+  }
+
+});
 
 
 // Start the server
