@@ -73,7 +73,8 @@ const single_rooms=mongoose.Schema({
   check_in_date:Date,
   check_out_date:Date,
   price_per:Number,
-  price_total:Number
+  price_total:Number,
+  status:Boolean
 });
 const Single_Rooms = mongoose.model("Single_Rooms",single_rooms);
 
@@ -83,7 +84,8 @@ const double_rooms=mongoose.Schema({
   check_in_date:Date,
   check_out_date:Date,
   price_per:Number,
-  price_total:Number
+  price_total:Number,
+  status:Boolean
 });
 const Double_Rooms = mongoose.model("Double_Rooms",double_rooms);
 
@@ -93,7 +95,8 @@ const suite_rooms=mongoose.Schema({
   check_in_date:Date,
   check_out_date:Date,
   price_per:Number,
-  price_total:Number
+  price_total:Number,
+  status:Boolean
 });
 const Suite_Rooms = mongoose.model("Suite_Rooms",suite_rooms);
 
@@ -270,32 +273,126 @@ app.post("/newsletter_unsub", async (req, res) => {
   }
 });
 
-app.post("/reserve_room",async(req,res)=>{
+app.post("/load_rooms", async (req, res) => {
+  console.log('Received POST request for /load_rooms.');
+  console.log('Request Body:', req.body);
+
+  try {
+    const single = await Single_Rooms.find();  // Fetch all single rooms
+    
+    const promises = single.map(async (room) => {
+      if (room.check_out_date == null || room.check_out_date <= new Date()) {
+        room.status = true;
+      } else {
+        room.status = false;
+      }
+      return await room.save();
+    });
+    await Promise.all(promises);
+
+    const double = await Double_Rooms.find();
+    promises = double.map(async (room) => {
+      if (room.check_out_date == null || room.check_out_date <= new Date()) {
+        room.status = true;
+      } else {
+        room.status = false;
+      }
+      return await room.save();
+    });
+    await Promise.all(promises);
+
+    const suite = await Suite_Rooms.find();
+    promises = suite.map(async (room) => {
+      if (room.check_out_date == null || room.check_out_date <= new Date()) {
+        room.status = true;
+      } else {
+        room.status = false;
+      }
+      return await room.save();
+    });
+    await Promise.all(promises);
+
+    res.json({ message: "Rooms loaded and updated successfully"});
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Internal Server Error");
+  }
+});
+
+app.post("/reservation_details",async(req,res)=>{
+  const user= await User.findOne({username:req.body.username});
+  console.log("Req Bdy: ",req.body);
+  if(user){
+    res.json({
+      fullName:user.full_name,
+      email:user.email,
+      phone:user.phone
+    })
+  }
+});
+
+app.post("/reserve_room", async (req, res) => {
   console.log('Received POST request for /reserve_room.');
   console.log('Request Body:', req.body);
 
-  const name=req.body.fullName;
-  const email=req.body.email;
-  const phone=req.body.phone;
-  let total=0;
-  req.body.cartItems.forEach(room=>{
-    total+=room.roomCost;
+  const name = req.body.fullName;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  let total = 0;
+  let unavailableRooms = [];
+
+  req.body.cartItems.forEach(room => {
+    total += room.roomCost;
   });
+
   const newRes = new Reservation_Room({
-    full_name:name,
+    full_name: name,
     email,
     phone,
     total
   });
+
   try {
     await newRes.save();
-    res.json({message:"Reservation Has Been Made"});
-  } catch(err){
+    const res_id = newRes._id;
+
+    for (const room of req.body.cartItems) {
+      const people = room.numPeople;
+      const check_in_date = room.checkin;
+      const check_out_date = room.checkout;
+      const price_per = Number.parseInt(room.roomType.split(" - ₹")[1].split("/night")[0].trim());
+      const price_total = room.roomCost;
+
+      let availableRoom;
+
+      if (room.roomType.includes("Single")) {
+        availableRoom = await Single_Rooms.findOne({ status: true });
+      } else if (room.roomType.includes("Double")) {
+        availableRoom = await Double_Rooms.findOne({ status: true });
+      } else if (room.roomType.includes("Suite")) {
+        availableRoom = await Suite_Rooms.findOne({ status: true });
+      }
+
+      if (availableRoom) {
+        availableRoom.reservation_id = res_id;
+        availableRoom.people = people;
+        availableRoom.check_in_date = check_in_date;
+        availableRoom.check_out_date = check_out_date;
+        availableRoom.price_per = price_per;
+        availableRoom.price_total = price_total;
+        await availableRoom.save();
+        res.json({ message: "Reservation Has Been Made" });
+      } 
+      else{
+        return res.json({ message: "Rooms not available", unavailableRooms });
+      }
+    }
+  } catch (err) {
     console.log(err);
     res.status(500).json("Internal Server Error");
   }
-
 });
+
 
 
 // Start the server

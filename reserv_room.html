@@ -203,7 +203,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert(data);
+                alert(data.message);
                 if(data.message=="Reservation Has Been Made"){
                     document.getElementById("reserv_room").reset();
                 }
@@ -214,8 +214,37 @@
             });
         }
 
-
-
+        function getDetail(){
+            fetch("http://localhost:3000/reservation_details",{
+               method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: sessionStorage.getItem("username") })
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                document.getElementById('fullName').value=data.fullName || '';
+                document.getElementById('email').value=data.email || '';
+                document.getElementById('phone').value=data.phone || '';
+            })
+        }
+        
+        function loadRooms(){
+            fetch("http://localhost:3000/load_rooms",{
+                method:"POST",
+                headers:{
+                    'Content-Type': "application/json"
+                }
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                alert(data.message);
+            })
+        }
+        
+        window.onload=getDetail;
+        window.onload=loadRooms;
     </script>
 </head>
 <body>
