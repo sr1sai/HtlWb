@@ -243,8 +243,10 @@
             })
         }
         
-        window.onload=getDetail;
-        window.onload=loadRooms;
+        window.onload = function() {
+                                        getDetail();
+                                        loadRooms();
+                                    };
     </script>
 </head>
 <body>

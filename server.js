@@ -278,43 +278,66 @@ app.post("/load_rooms", async (req, res) => {
   console.log('Request Body:', req.body);
 
   try {
-    const single = await Single_Rooms.find();  // Fetch all single rooms
-    
-    const promises = single.map(async (room) => {
-      if (room.check_out_date == null || room.check_out_date <= new Date()) {
+    // Single Rooms
+    const single = await Single_Rooms.find();
+    const singleUpdates = single.map(async (room) => {
+      console.log("single",room.status);
+      if (room.check_out_date == null || (room.check_out_date > new Date() && room.check_out_date <= new Date())) {
+        room.reservation_id=null;
+        room.people=null;
+        room.check_in_date=null;
+        room.check_out_date=null;
+        room.price_per=null;
+        room.price_total=null;
         room.status = true;
       } else {
         room.status = false;
       }
-      return await room.save();
+      await room.save();  // Save the updated status
     });
-    await Promise.all(promises);
+    await Promise.all(singleUpdates);
 
+    // Double Rooms
     const double = await Double_Rooms.find();
-    promises = double.map(async (room) => {
+    const doubleUpdates = double.map(async (room) => {
+      console.log("double",room.status);
       if (room.check_out_date == null || room.check_out_date <= new Date()) {
+        room.reservation_id=null;
+        room.people=null;
+        room.check_in_date=null;
+        room.check_out_date=null;
+        room.price_per=null;
+        room.price_total=null;
         room.status = true;
       } else {
         room.status = false;
       }
-      return await room.save();
+      await room.save();  // Save the updated status
     });
-    await Promise.all(promises);
+    await Promise.all(doubleUpdates);
 
+    // Suite Rooms
     const suite = await Suite_Rooms.find();
-    promises = suite.map(async (room) => {
+    const suiteUpdates = suite.map(async (room) => {
+      console.log("suite",room.status);
       if (room.check_out_date == null || room.check_out_date <= new Date()) {
+        room.reservation_id=null;
+        room.people=null;
+        room.check_in_date=null;
+        room.check_out_date=null;
+        room.price_per=null;
+        room.price_total=null;
         room.status = true;
       } else {
         room.status = false;
       }
-      return await room.save();
+      await room.save();  // Save the updated status
     });
-    await Promise.all(promises);
+    await Promise.all(suiteUpdates);
 
-    res.json({ message: "Rooms loaded and updated successfully"});
+    res.json({ message: "Rooms loaded and updated successfully" });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json("Internal Server Error");
   }
 });
@@ -339,8 +362,6 @@ app.post("/reserve_room", async (req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   let total = 0;
-  let unavailableRooms = [];
-
   req.body.cartItems.forEach(room => {
     total += room.roomCost;
   });
@@ -356,6 +377,9 @@ app.post("/reserve_room", async (req, res) => {
     await newRes.save();
     const res_id = newRes._id;
 
+    // Flag to track room availability
+    let roomNotAvailable = false;
+
     for (const room of req.body.cartItems) {
       const people = room.numPeople;
       const check_in_date = room.checkin;
@@ -363,29 +387,34 @@ app.post("/reserve_room", async (req, res) => {
       const price_per = Number.parseInt(room.roomType.split(" - ₹")[1].split("/night")[0].trim());
       const price_total = room.roomCost;
 
-      let availableRoom;
+      let reservedRoom = null;
 
       if (room.roomType.includes("Single")) {
-        availableRoom = await Single_Rooms.findOne({ status: true });
+        reservedRoom = await Single_Rooms.findOne({ status: true });  // Use await here
       } else if (room.roomType.includes("Double")) {
-        availableRoom = await Double_Rooms.findOne({ status: true });
+        reservedRoom = await Double_Rooms.findOne({ status: true });  // Use await here
       } else if (room.roomType.includes("Suite")) {
-        availableRoom = await Suite_Rooms.findOne({ status: true });
+        reservedRoom = await Suite_Rooms.findOne({ status: true });   // Use await here
       }
 
-      if (availableRoom) {
-        availableRoom.reservation_id = res_id;
-        availableRoom.people = people;
-        availableRoom.check_in_date = check_in_date;
-        availableRoom.check_out_date = check_out_date;
-        availableRoom.price_per = price_per;
-        availableRoom.price_total = price_total;
-        await availableRoom.save();
-        res.json({ message: "Reservation Has Been Made" });
-      } 
-      else{
-        return res.json({ message: "Rooms not available", unavailableRooms });
+      if (reservedRoom) {
+        reservedRoom.reservation_id = res_id;
+        reservedRoom.people = people;
+        reservedRoom.check_in_date = check_in_date;
+        reservedRoom.check_out_date = check_out_date;
+        reservedRoom.price_per = price_per;
+        reservedRoom.price_total = price_total;
+        await reservedRoom.save();    // Don't forget to save the room
+      } else {
+        roomNotAvailable = true;
+        break;  // Exit the loop early if a room is not available
       }
+    }
+
+    if (roomNotAvailable) {
+      res.json({ message: "Rooms not available" });
+    } else {
+      res.json({ message: "Reservation Has Been Made" });
     }
   } catch (err) {
     console.log(err);
@@ -393,6 +422,10 @@ app.post("/reserve_room", async (req, res) => {
   }
 });
 
+app.post("/reserv_table",async(req,res)=>{
+  console.log('Received POST request for /reserv_table.');
+  console.log('Request Body:', req.body);
+})
 
 
 // Start the server

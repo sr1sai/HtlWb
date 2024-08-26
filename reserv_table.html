@@ -175,6 +175,82 @@
             }
         }
     </style>
+    <script>
+
+        function getDetail(){
+            fetch("http://localhost:3000/reservation_details",{
+               method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: sessionStorage.getItem("username") })
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                document.getElementById('fullName').value=data.fullName || '';
+                document.getElementById('email').value=data.email || '';
+                document.getElementById('phone').value=data.phone || '';
+            })
+        }
+
+        function reqTable() {
+            // Extracting the values from the form fields
+            const fullname = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const people = document.getElementById('numPeople').value === '5' ? document.getElementById('familyPeopleCount').value : document.getElementById('numPeople').value;
+            const mealType = document.getElementById('mealType').value;
+            const reservationDate = document.getElementById('reservationDate').value;
+
+            // Collecting the cart items
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartItems = [];
+
+            // Loop through the cart items and extract the details
+            cartItemsDiv.querySelectorAll('.cart-item').forEach(item => {
+                const itemDetails = {
+                    description: item.children[0].innerText,  // e.g., "Lunch on 2024-08-26 for 3 people"
+                    price: item.children[1].innerText.replace('₹', '')  // Remove ₹ symbol and get the price
+                };
+                cartItems.push(itemDetails);
+            });
+
+            // Validating that the required fields are filled
+            if (!fullname || !email || !phone || !people || !mealType || !reservationDate) {
+                alert("Please fill in all the required fields.");
+                return;
+            }
+
+            // Preparing the data to be sent in the request
+            const data = {
+                fullname: fullname,
+                email: email,
+                phone: phone,
+                people: people,
+                mealType: mealType,
+                reservationDate: reservationDate,
+                cartItems: cartItems,  // Add the cart items to the data
+            };
+
+            // Sending the POST request
+            fetch("http://localhost:3000/reserv_table", {
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        window.onload=getDetail;
+    </script>
 </head>
 <body>
     <div class="container">
@@ -294,7 +370,7 @@
                             Total: ₹0
                         </div>
                         <div class="field">
-                            <input type="submit" value="Reserve Now" form="reserv_table">
+                            <input type="submit" value="Reserve Now" form="reserv_table" onclick="reqTable(); return false;">
                         </div>
                     </div>
                 </form>
