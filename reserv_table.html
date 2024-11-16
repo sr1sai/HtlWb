@@ -201,6 +201,8 @@
             const people = document.getElementById('numPeople').value === '5' ? document.getElementById('familyPeopleCount').value : document.getElementById('numPeople').value;
             const mealType = document.getElementById('mealType').value;
             const reservationDate = document.getElementById('reservationDate').value;
+            const totalText=document.getElementById("totalPrice").innerHTML;
+            const total=totalText.split("₹")[1];
 
             // Collecting the cart items
             const cartItemsDiv = document.getElementById('cartItems');
@@ -229,7 +231,8 @@
                 people: people,
                 mealType: mealType,
                 reservationDate: reservationDate,
-                cartItems: cartItems,  // Add the cart items to the data
+                total:parseInt(total),
+                cartItems: cartItems  // Add the cart items to the data
             };
 
             // Sending the POST request

@@ -100,6 +100,25 @@ const suite_rooms=mongoose.Schema({
 });
 const Suite_Rooms = mongoose.model("Suite_Rooms",suite_rooms);
 
+const reservationTable = mongoose.Schema({
+  full_name: String,
+  email: String,
+  phone: String,
+  people: Number,
+  mealType: String,
+  reservationDate: Date,
+  total: Number,
+  cartItems: [
+    {
+      description: String,
+      price: Number
+    }
+  ]
+});
+
+const Reservation_Table= mongoose.model("Reservation_Table",reservationTable);
+
+
 // Route
 app.post('/signup', async (req, res) => {
   console.log('Received POST request for /signup ._.');
@@ -425,8 +444,39 @@ app.post("/reserve_room", async (req, res) => {
 app.post("/reserv_table",async(req,res)=>{
   console.log('Received POST request for /reserv_table.');
   console.log('Request Body:', req.body);
-})
 
+  const full_name= req.body.fullname;
+  const email= req.body.email;
+  const phone= req.body.phone;
+  const people= req.body.people;
+  const mealType= req.body.mealType;
+  const reservationDate= req.body.reservationDate;
+  const total=req.body.total;
+  const cartItems= req.body.cartItems;
+  const newTableRes= new Reservation_Table({
+    full_name,
+    email,
+    phone,
+    people,
+    mealType,
+    reservationDate,
+    total,
+    cartItems
+  })
+  try{
+    await newTableRes.save();
+    res.json({ message: "Table Reservation Has Been Made" });
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).json({message:"Internal Server Error"});
+  }
+
+});
+
+app.post("/rate",async(req,res)=>{
+  console.log("Reqe")
+});
 
 // Start the server
 app.listen(port, () => {

@@ -92,6 +92,30 @@
       color: #ffc700;
     }
   </style>
+  <script>
+      function rate(){
+
+        const rating=document.getElementsByName("rating").value;
+        const feedback=document.getElementById("feedback").value;
+        alert(rating);
+        alert(feedback);
+        const data={
+          rating:"",
+          feedback:""
+        }
+        fetch("http://localhost:3000/rate",{
+          method: "POST",
+          'Content-Type':'application/json',
+          body: JSON.stringify({data})
+        })
+        .then(response=>response.json())
+
+        .then(data=>{
+          alert(data.message);
+        })
+
+      }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -158,7 +182,7 @@
             </div>
           </div>
           <div class="field">
-            <input type="submit" value="Submit Feedback">
+            <input type="submit" value="Submit Feedback" onclick="rate(); return false;">
           </div>
         </form>
       </div>
@@ -191,25 +215,6 @@
 
       hamburger.addEventListener('click', function() {
           navBarMobile.style.display = navBarMobile.style.display === 'none' ? 'flex' : 'none';
-      });
-
-      const ratingForm = document.getElementById('rating_form');
-      ratingForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const userName = document.getElementById('userName').value;
-        const userEmail = document.getElementById('userEmail').value;
-        const feedback = document.getElementById('feedback').value;
-        const rating = document.querySelector('input[name="rating"]:checked').value;
-
-        console.log(`Name: ${userName}`);
-        console.log(`Email: ${userEmail}`);
-        console.log(`Feedback: ${feedback}`);
-        console.log(`Rating: ${rating}`);
-
-        alert('Feedback submitted successfully!');
-
-        ratingForm.reset();
       });
     });
   </script>
