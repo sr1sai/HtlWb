@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic Sans MS:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Copse:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Delius Unicase:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dhyana:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=David Libre:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Droid Sans:wght@400&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inria Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin Sans:wght@700&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EEEEEE;
+      }
+
+      .form {
+        background: #393E46;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 20px 40px;
+        max-width: 400px;
+        width: 100%;
+        color: #EEEEEE;
+      }
+
+      .tabs {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        cursor: pointer;
+        padding: 10px 20px;
+        background: rgba(34, 40, 49, 0.7);
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .tab.active {
+        background: #00ADB5;
+        color: #222831;
+      }
+
+      .form-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #EEEEEE;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #EEEEEE;
+        color: #222831;
+      }
+
+      input[type=submit] {
+        width: 100%;
+        padding: 15px;
+        outline: 1px solid #222831;
+        border: none;
+        border-radius: 5px;
+        background-color: #00ADB5;
+        color: #222831;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      input[type=submit]:hover {
+        outline: 1px solid #EEEEEE;
+        color: #EEEEEE;
+        background-color: #222831;
+      }
+    </style>
+    <script>
+      const ip='192.168.236.126';
+      document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach((tab, index) => {
+          tab.addEventListener('click', () => {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            tab.classList.add('active');
+            contents[index].classList.add('active');
+          });
+        });
+
+        //signup
+        var user='not init';
+      });
+
+      //sign up
+      function reqSignup(){
+        user={'full_name': document.getElementById('signup-name').value,
+                  'username': document.getElementById('signup-username').value,
+                  'phone': document.getElementById('signup-phone').value,
+                  'email': document.getElementById('signup-email').value,
+                  'password': document.getElementById('signup-password').value
+        }
+        fetch('http://'+ip+':3000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert(JSON.stringify(data.message));  // Alert the message received from server
+            if (data.message === 'Signup successful') {
+                location.href =location.href.replace('login.html','login.html');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      }
+
+      //sign in res
+      function reqSignIn(){
+        user={
+              'username': document.getElementById('signin-username').value,
+              'password': document.getElementById('signin-password').value
+        }
+        fetch('http://'+ip+':3000/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert(JSON.stringify(data.message));
+            if (data.message === 'Signin successful') {
+              sessionStorage.setItem('username', document.getElementById('signin-username').value);
+              alert(sessionStorage.getItem('username'));
+              location.href =location.href.replace('login.html','index.html');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      }
+
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header_logo">
+          <div class="header_logo_square">
+            <a href="./home.html"><img src="https://www.kaldanhotels.com/images/logo.png" alt="logo" style="width:140px;height:80px;"></a>
+          </div>
+        </div>
+        <div class="header_nav_bar">
+        </div>
+      </div>
+      <div class="main">
+        <div class="form">
+          <div class="tabs">
+            <div class="tab active">Sign In</div>
+            <div class="tab">Sign Up</div>
+          </div>
+          <div class="form-container">
+            <div class="tab-content active">
+              <form>
+                <div class="form-group">
+                  <label for="signin-username">Username/Phone/Email</label>
+                  <input type="text" id="signin-username" required>
+                </div>
+                <div class="form-group">
+                  <label for="signin-password">Password</label>
+                  <input type="password" id="signin-password" required>
+                </div>
+                <input type="submit" id="signin_btn" value='Sign In' onclick="reqSignIn(); return false;">
+              </form>
+            </div>
+            <div class="tab-content">
+              <form>
+                <div class="form-group">
+                  <label for="signup-name">Full Name</label>
+                  <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="signup-phone">Phone</label>
+                  <input type="tel" id="signup-phone" required>
+                </div>
+                <div class="form-group">
+                  <label for="signup-email">Email</label>
+                  <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                  <label for="signup-username">Username</label>
+                  <input type="text" id="signup-username" required>
+                </div>
+                <div class="form-group">
+                  <label for="signup-password">Password</label>
+                  <input type="password" id="signup-password" required>
+                </div>
+                <input type="submit" id="signup_btn" value="Sign Up" onclick="reqSignup(); return false;">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer_item">
+          <div class="footer_item_icon"><a href="https://www.facebook.com/kaldansamudhra/"><i class="fab fa-facebook-f" style="color: rgb(59, 89, 300);"></i></a></div>
+        </div>
+        <div class="footer_item">
+          <div class="footer_item_icon"><a href="https://www.instagram.com/kaldanhotels/?__coig_restricted=1"><i class="fab fa-instagram" style="color: rgb(193, 53, 132);"></i></a></div>
+        </div>
+        <div class="footer_item">
+          <div class="footer_item_icon"><a href="https://www.bing.com/maps?q=kaldan+samudhra+palace+location&FORM=HDRSC7&cp=12.646105%7E80.202444&lvl=14.5"><img src="./img/gm.svg" alt="maps_logo" style="height:42px;width:42px;"></img></a></div>
+        </div>
+        <div class="footer_item">
+          <div class="footer_item_icon"><a href="https://in.linkedin.com/company/kaldan-samudhra-palace"><i class="fab fa-linkedin" style="color: rgb(29, 161, 242);"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
